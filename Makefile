@@ -5,7 +5,7 @@ RUN_PYTHON=${POETRY} run ${PYTHON}
 SRC=src
 TESTS=tests
 
-all: clean format static_analysis test build run
+all: clean format static_analysis test build #run
 
 .PHONY: help
 help: ## help command
