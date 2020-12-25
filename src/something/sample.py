@@ -1,24 +1,19 @@
 import typing
+from dataclasses import dataclass
 
 from something.nodes import (
     EqualNode,
     FunctionNode,
     IdentifierNode,
+    MultipleNode,
     Node,
     SemicolonNode,
     gNode,
 )
 
 
-class GraphTraversal(Node):
+class GraphTraversal(MultipleNode):
     nodes: typing.List[Node] = [gNode()]
-
-    def generate(self) -> typing.Generator[Node, None, None]:
-        for node in self.nodes:
-            yield node
-
-    def evaluate(self) -> str:
-        return "".join(node.evaluate() for node in self.generate())
 
     def addE(self, edgeLabel: str) -> "GraphTraversal":
         self.nodes.append(FunctionNode("addE", [edgeLabel]))
@@ -45,23 +40,29 @@ class GraphTraversal(Node):
         return self
 
 
-class Variable(Node):
+class AssignmentStatement(MultipleNode):
+    identifier: IdentifierNode
+    graph_traversal: GraphTraversal
+
+    def __init__(self, identifier: IdentifierNode, graph_traversal: GraphTraversal):
+        self.identifier = identifier
+        self.graph_traversal = graph_traversal
+        self.equal_node = EqualNode()
+        self.semicolon_node = SemicolonNode()
+        self.nodes = [
+            self.identifier,
+            self.equal_node,
+            self.graph_traversal,
+            self.semicolon_node,
+        ]
+
+
+@dataclass
+class Variable(MultipleNode):
     name: str
-    nodes: typing.List[Node] = []
 
-    def __init__(self, name: str):
-        self.name = name
-
-    def generate(self) -> typing.Generator[Node, None, None]:
-        for node in self.nodes:
-            yield node
-
-    def evaluate(self) -> str:
-        return "".join(node.evaluate() for node in (self.generate()))
-
-    def assignment(self, g: GraphTraversal) -> "Variable":
-        self.nodes.append(IdentifierNode(self.name))
-        self.nodes.append(EqualNode())
-        self.nodes.append(g)
-        self.nodes.append(SemicolonNode())
+    def assignment(self, graph_traversal: GraphTraversal) -> "Variable":
+        self.nodes.append(
+            AssignmentStatement(IdentifierNode(self.name), graph_traversal)
+        )
         return self

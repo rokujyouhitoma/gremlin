@@ -47,3 +47,14 @@ class gNode(StringNode):
 @dataclass
 class SemicolonNode(StringNode):
     value: str = ";"
+
+
+class MultipleNode(Node):
+    nodes: typing.List[Node] = []
+
+    def generate(self) -> typing.Generator[Node, None, None]:
+        for node in self.nodes:
+            yield node
+
+    def evaluate(self) -> str:
+        return "".join(node.evaluate() for node in self.generate())
