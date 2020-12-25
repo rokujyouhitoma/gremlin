@@ -41,21 +41,12 @@ class GraphTraversal(MultipleNode):
 
 
 class AssignmentStatement(MultipleNode):
-    identifier: IdentifierNode
-    graph_traversal: GraphTraversal
-    equal_node: EqualNode
-    semicolon_node: SemicolonNode
-
-    def __init__(self, identifier: IdentifierNode, graph_traversal: GraphTraversal):
-        self.identifier = identifier
-        self.graph_traversal = graph_traversal
-        self.equal_node = EqualNode()
-        self.semicolon_node = SemicolonNode()
+    def __init__(self, identifier: IdentifierNode, node: Node):
         self.nodes = [
-            self.identifier,
-            self.equal_node,
-            self.graph_traversal,
-            self.semicolon_node,
+            identifier,
+            EqualNode(),
+            node,
+            SemicolonNode(),
         ]
 
 
@@ -63,8 +54,6 @@ class AssignmentStatement(MultipleNode):
 class Variable(MultipleNode):
     name: str
 
-    def assignment(self, graph_traversal: GraphTraversal) -> "Variable":
-        self.nodes.append(
-            AssignmentStatement(IdentifierNode(self.name), graph_traversal)
-        )
+    def assignment(self, node: Node) -> "Variable":
+        self.nodes.append(AssignmentStatement(IdentifierNode(self.name), node))
         return self
