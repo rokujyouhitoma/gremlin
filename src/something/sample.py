@@ -1,50 +1,17 @@
 import typing
-from dataclasses import dataclass
 
-
-class Operator:
-    def evaluate(self) -> str:
-        pass
-
-
-@dataclass
-class StringOperator(Operator):
-    value: str
-
-    def evaluate(self) -> str:
-        return self.value
-
-
-@dataclass
-class FunctionOperator(Operator):
-    type: str
-    arguments: typing.List[typing.Any]
-
-    def evaluate(self) -> str:
-        type = self.type
-        if len(self.arguments):
-            arguments = '","'.join(self.arguments)
-            return f'.{type}("{arguments}")'
-        else:
-            return f".{type}()"
-
-
-@dataclass
-class GraphTraversalOperator(Operator):
-    name: str
-
-    def evaluate(self) -> str:
-        return self.name
+from something.operators import FunctionOperator, Operator, StringOperator
 
 
 class GraphTraversal(Operator):
-    operators: typing.List[Operator] = [GraphTraversalOperator("g")]
+    operators: typing.List[Operator] = [StringOperator("g")]
+
+    def generate(self) -> typing.Generator[Operator, None, None]:
+        for operator in self.operators:
+            yield operator
 
     def evaluate(self) -> str:
-        return "".join(operator.evaluate() for operator in (self.operators))
-
-    # def __repr__(self) -> str:
-    #    return f"<GraphTraversal:{str(self.operators)}>"
+        return "".join(operator.evaluate() for operator in self.generate())
 
     def addE(self, edgeLabel: str) -> "GraphTraversal":
         self.operators.append(FunctionOperator("addE", [edgeLabel]))
@@ -78,11 +45,12 @@ class Variable(Operator):
     def __init__(self, name: str):
         self.name = name
 
-    # def __repr__(self) -> str:
-    #    return f"<Variable:{str(self.operators)}>"
+    def generate(self) -> typing.Generator[Operator, None, None]:
+        for operator in self.operators:
+            yield operator
 
     def evaluate(self) -> str:
-        return "".join(operator.evaluate() for operator in (self.operators))
+        return "".join(operator.evaluate() for operator in (self.generate()))
 
     def assignment(self, g: GraphTraversal) -> "Variable":
         # TODO:
