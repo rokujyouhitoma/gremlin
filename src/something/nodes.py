@@ -16,22 +16,13 @@ class StringNode(Node):
 
 
 @dataclass
-class FunctionNode(Node):
-    type: str
-    arguments: typing.List[typing.Any]
-
-    def evaluate(self) -> str:
-        type = self.type
-        if len(self.arguments):
-            arguments = '","'.join(self.arguments)
-            return f'.{type}("{arguments}")'
-        else:
-            return f".{type}()"
+class IdentifierNode(StringNode):
+    pass
 
 
 @dataclass
-class IdentifierNode(StringNode):
-    pass
+class DotNode(StringNode):
+    value: str = "."
 
 
 @dataclass
@@ -49,6 +40,16 @@ class SemicolonNode(StringNode):
     value: str = ";"
 
 
+@dataclass
+class OpenBlacketNode(StringNode):
+    value: str = "("
+
+
+@dataclass
+class CloseBlacketNode(StringNode):
+    value: str = ")"
+
+
 class MultipleNode(Node):
     nodes: typing.List[Node] = []
 
@@ -58,3 +59,38 @@ class MultipleNode(Node):
 
     def evaluate(self) -> str:
         return "".join(node.evaluate() for node in self.generate())
+
+
+@dataclass
+class CallNameNode(StringNode):
+    pass
+
+
+@dataclass
+class ArgumentListNode(Node):
+    argument_list: typing.List[typing.Any]
+
+    def evaluate(self) -> str:
+        if not len(self.argument_list):
+            return ""
+        return '"' + '","'.join(self.argument_list) + '"'
+
+
+class CallNode(MultipleNode):
+    def __init__(
+        self, call_name_node: CallNameNode, argument_list_node: ArgumentListNode
+    ):
+        self.nodes = [
+            call_name_node,
+            OpenBlacketNode(),
+            argument_list_node,
+            CloseBlacketNode(),
+        ]
+
+
+class MethodCallNode(MultipleNode):
+    def __init__(self, method_name: str, argument_list: typing.List[typing.Any]):
+        self.nodes = [
+            DotNode(),
+            CallNode(CallNameNode(method_name), ArgumentListNode(argument_list)),
+        ]

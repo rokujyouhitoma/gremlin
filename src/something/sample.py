@@ -3,8 +3,8 @@ from dataclasses import dataclass
 
 from something.nodes import (
     EqualNode,
-    FunctionNode,
     IdentifierNode,
+    MethodCallNode,
     MultipleNode,
     Node,
     SemicolonNode,
@@ -16,33 +16,35 @@ class GraphTraversal(MultipleNode):
     nodes: typing.List[Node] = [gNode()]
 
     def addE(self, edgeLabel: str) -> "GraphTraversal":
-        self.nodes.append(FunctionNode("addE", [edgeLabel]))
+        self.nodes.append(MethodCallNode("addE", [edgeLabel]))
         return self
 
     def addV(self, vertexLabel: str = "") -> "GraphTraversal":
-        self.nodes.append(FunctionNode("addV", [vertexLabel]))
+        self.nodes.append(MethodCallNode("addV", [vertexLabel]))
         return self
 
     def has(self, propertyKey: str, value: typing.Any) -> "GraphTraversal":
-        self.nodes.append(FunctionNode("has", [propertyKey, value]))
+        self.nodes.append(MethodCallNode("has", [propertyKey, value]))
         return self
 
     def out(self, edgeLabel: str) -> "GraphTraversal":
-        self.nodes.append(FunctionNode("out", [edgeLabel]))
+        self.nodes.append(MethodCallNode("out", [edgeLabel]))
         return self
 
     def V(self) -> "GraphTraversal":
-        self.nodes.append(FunctionNode("V", []))
+        self.nodes.append(MethodCallNode("V", []))
         return self
 
     def values(self, propertyKey: str) -> "GraphTraversal":
-        self.nodes.append(FunctionNode("values", [propertyKey]))
+        self.nodes.append(MethodCallNode("values", [propertyKey]))
         return self
 
 
 class AssignmentStatement(MultipleNode):
     identifier: IdentifierNode
     graph_traversal: GraphTraversal
+    equal_node: EqualNode
+    semicolon_node: SemicolonNode
 
     def __init__(self, identifier: IdentifierNode, graph_traversal: GraphTraversal):
         self.identifier = identifier
