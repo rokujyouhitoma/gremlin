@@ -108,6 +108,20 @@ class MethodCallNode(MultipleNode):
         ]
 
 
+class MethodCallNodeArgumentsNode(MultipleNode):
+    def __init__(self, method_name: str, argument_list: typing.Sequence[Node]):
+        self.nodes = [
+            DotNode(),
+            CallNameNode(method_name),
+        ]
+        self.nodes.append(OpenBlacketNode())
+        for index, node in enumerate(argument_list):
+            if index != 0:
+                self.nodes.append(ValueNode(","))
+            self.nodes.append(node)
+        self.nodes.append(CloseBlacketNode())
+
+
 class AssignmentStatement(MultipleNode):
     def __init__(self, identifier: IdentifierNode, node: Node):
         self.nodes = [

@@ -6,16 +6,13 @@ from something.nodes import (
     AssignmentStatement,
     CallNameNode,
     CallNode,
-    CloseBlacketNode,
-    DotNode,
     IdentifierNode,
     IntegerNode,
     MethodCallNode,
+    MethodCallNodeArgumentsNode,
     MultipleNode,
     Node,
-    OpenBlacketNode,
     StringNode,
-    ValueNode,
 )
 
 
@@ -58,15 +55,7 @@ class GraphTraversal(MultipleNode):
         return self
 
     def match(self, *args: "GraphTraversal") -> "GraphTraversal":
-        # TODO:
-        self.nodes.append(DotNode())
-        self.nodes.append(CallNameNode("match"))
-        self.nodes.append(OpenBlacketNode())
-        for index, node in enumerate(args):
-            if index != 0:
-                self.nodes.append(ValueNode(","))
-            self.nodes.append(node)
-        self.nodes.append(CloseBlacketNode())
+        self.nodes.append(MethodCallNodeArgumentsNode("match", args))
         return self
 
     def out(self, edgeLabel: str) -> "GraphTraversal":
@@ -96,5 +85,6 @@ class Variable(MultipleNode):
 
 
 def as_(stepLabel: str) -> GraphTraversal:
-    node = CallNode(CallNameNode("as"), ArgumentListNode([StringNode(stepLabel)]))
-    return GraphTraversal([node])
+    return GraphTraversal(
+        [CallNode(CallNameNode("as"), ArgumentListNode([StringNode(stepLabel)]))]
+    )
