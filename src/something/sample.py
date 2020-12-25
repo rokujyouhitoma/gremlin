@@ -1,12 +1,19 @@
 import typing
 
-from something.operators import FunctionOperator, Operator, StringOperator
+from something.nodes import (
+    EqualNode,
+    FunctionNode,
+    IdentifierNode,
+    Node,
+    SemicolonNode,
+    gNode,
+)
 
 
-class GraphTraversal(Operator):
-    operators: typing.List[Operator] = [StringOperator("g")]
+class GraphTraversal(Node):
+    operators: typing.List[Node] = [gNode()]
 
-    def generate(self) -> typing.Generator[Operator, None, None]:
+    def generate(self) -> typing.Generator[Node, None, None]:
         for operator in self.operators:
             yield operator
 
@@ -14,38 +21,38 @@ class GraphTraversal(Operator):
         return "".join(operator.evaluate() for operator in self.generate())
 
     def addE(self, edgeLabel: str) -> "GraphTraversal":
-        self.operators.append(FunctionOperator("addE", [edgeLabel]))
+        self.operators.append(FunctionNode("addE", [edgeLabel]))
         return self
 
     def addV(self, vertexLabel: str = "") -> "GraphTraversal":
-        self.operators.append(FunctionOperator("addV", [vertexLabel]))
+        self.operators.append(FunctionNode("addV", [vertexLabel]))
         return self
 
     def has(self, propertyKey: str, value: typing.Any) -> "GraphTraversal":
-        self.operators.append(FunctionOperator("has", [propertyKey, value]))
+        self.operators.append(FunctionNode("has", [propertyKey, value]))
         return self
 
     def out(self, edgeLabel: str) -> "GraphTraversal":
-        self.operators.append(FunctionOperator("out", [edgeLabel]))
+        self.operators.append(FunctionNode("out", [edgeLabel]))
         return self
 
     def V(self) -> "GraphTraversal":
-        self.operators.append(FunctionOperator("V", []))
+        self.operators.append(FunctionNode("V", []))
         return self
 
     def values(self, propertyKey: str) -> "GraphTraversal":
-        self.operators.append(FunctionOperator("values", [propertyKey]))
+        self.operators.append(FunctionNode("values", [propertyKey]))
         return self
 
 
-class Variable(Operator):
+class Variable(Node):
     name: str
-    operators: typing.List[Operator] = []
+    operators: typing.List[Node] = []
 
     def __init__(self, name: str):
         self.name = name
 
-    def generate(self) -> typing.Generator[Operator, None, None]:
+    def generate(self) -> typing.Generator[Node, None, None]:
         for operator in self.operators:
             yield operator
 
@@ -54,8 +61,8 @@ class Variable(Operator):
 
     def assignment(self, g: GraphTraversal) -> "Variable":
         # TODO:
-        self.operators.append(StringOperator(self.name))
-        self.operators.append(StringOperator("="))
+        self.operators.append(IdentifierNode(self.name))
+        self.operators.append(EqualNode())
         self.operators.append(g)
-        self.operators.append(StringOperator(";"))
+        self.operators.append(SemicolonNode())
         return self

@@ -5,11 +5,11 @@ class TestSomething:
 
         g = GraphTraversal()
         assert g
-        operator = Variable("x").assignment(
+        node = Variable("x").assignment(
             g.V().has("name", "gremlin").out("knows").out("knows").values("name")
         )
-        assert operator
+        assert node
         assert (
-            operator.evaluate()
+            node.evaluate()
             == 'x=g.V().has("name","gremlin").out("knows").out("knows").values("name");'
         )

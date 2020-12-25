@@ -2,13 +2,13 @@ import typing
 from dataclasses import dataclass
 
 
-class Operator:
+class Node:
     def evaluate(self) -> str:
         pass
 
 
 @dataclass
-class StringOperator(Operator):
+class StringNode(Node):
     value: str
 
     def evaluate(self) -> str:
@@ -16,7 +16,7 @@ class StringOperator(Operator):
 
 
 @dataclass
-class FunctionOperator(Operator):
+class FunctionNode(Node):
     type: str
     arguments: typing.List[typing.Any]
 
@@ -27,3 +27,23 @@ class FunctionOperator(Operator):
             return f'.{type}("{arguments}")'
         else:
             return f".{type}()"
+
+
+@dataclass
+class IdentifierNode(StringNode):
+    pass
+
+
+@dataclass
+class EqualNode(StringNode):
+    value: str = "="
+
+
+@dataclass
+class gNode(StringNode):
+    value: str = "g"
+
+
+@dataclass
+class SemicolonNode(StringNode):
+    value: str = ";"
