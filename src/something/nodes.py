@@ -8,7 +8,7 @@ class Node:
 
 
 @dataclass
-class StringNode(Node):
+class ValueNode(Node):
     value: str
 
     def evaluate(self) -> str:
@@ -16,64 +16,76 @@ class StringNode(Node):
 
 
 @dataclass
-class IdentifierNode(StringNode):
+class StringNode(Node):
+    value: str
+
+    def evaluate(self) -> str:
+        return f'"{self.value}"'
+
+
+@dataclass
+class IntegerNode(Node):
+    value: int
+
+    def evaluate(self) -> str:
+        return str(self.value)
+
+
+@dataclass
+class IdentifierNode(ValueNode):
     pass
 
 
 @dataclass
-class DotNode(StringNode):
+class DotNode(ValueNode):
     value: str = "."
 
 
 @dataclass
-class EqualNode(StringNode):
+class EqualNode(ValueNode):
     value: str = "="
 
 
 @dataclass
-class gNode(StringNode):
+class gNode(ValueNode):
     value: str = "g"
 
 
 @dataclass
-class SemicolonNode(StringNode):
+class SemicolonNode(ValueNode):
     value: str = ";"
 
 
 @dataclass
-class OpenBlacketNode(StringNode):
+class OpenBlacketNode(ValueNode):
     value: str = "("
 
 
 @dataclass
-class CloseBlacketNode(StringNode):
+class CloseBlacketNode(ValueNode):
     value: str = ")"
 
 
 class MultipleNode(Node):
     nodes: typing.List[Node] = []
 
-    def generate(self) -> typing.Generator[Node, None, None]:
-        for node in self.nodes:
-            yield node
-
     def evaluate(self) -> str:
-        return "".join(node.evaluate() for node in self.generate())
+        return "".join(node.evaluate() for node in self.nodes)
 
 
 @dataclass
-class CallNameNode(StringNode):
+class CallNameNode(ValueNode):
     pass
 
 
 @dataclass
 class ArgumentListNode(Node):
-    argument_list: typing.List[typing.Any]
+    argument_list: typing.Sequence[typing.Any]
 
     def evaluate(self) -> str:
         if not len(self.argument_list):
             return ""
-        return '"' + '","'.join(self.argument_list) + '"'
+        return ",".join([argument.evaluate() for argument in self.argument_list])
 
 
 class CallNode(MultipleNode):
@@ -89,7 +101,7 @@ class CallNode(MultipleNode):
 
 
 class MethodCallNode(MultipleNode):
-    def __init__(self, method_name: str, argument_list: typing.List[typing.Any]):
+    def __init__(self, method_name: str, argument_list: typing.Sequence[typing.Any]):
         self.nodes = [
             DotNode(),
             CallNode(CallNameNode(method_name), ArgumentListNode(argument_list)),

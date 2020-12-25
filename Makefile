@@ -62,15 +62,15 @@ radon-cc: ## radon compute Cyclomatic Complexity (CC)
 
 .PHONY: radon-raw
 radon-raw: ## radon compute raw metrics
-	radon raw ${SRC}
+	#radon raw ${SRC}
 
 .PHONY: radon-mi
 radon-mi: ## radon compute the Maintainability Index
-	radon mi ${SRC} -s -na
+	#radon mi ${SRC} -s -na
 
 .PHONY: radon-hal
 radon-hal: ## radon compute their Halstead metrics
-	radon hal ${SRC}
+	#radon hal ${SRC}
 
 .PHONY: xenon
 xenon: ## xenon
@@ -82,5 +82,5 @@ mypy: ## mypy
 
 .PHONY: pytest
 pytest: ## pytest
-	PYTHONPATH=${SRC} pytest --cov=${SRC} --cov-fail-under=70 -v ${TESTS} --cov-report=term-missing -n 2
+	PYTHONPATH=${SRC} pytest --cov=${SRC} --cov-fail-under=70 -v ${TESTS} --cov-report=term-missing -n 2 -vv
 
