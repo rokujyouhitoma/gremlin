@@ -1,13 +1,15 @@
-import pytest
-
-
 class TestSomething:
-    def test_(self):
+    def test_(self) -> None:
         # See: https://tinkerpop.apache.org/
         from something.sample import GraphTraversal, Variable
+
         g = GraphTraversal()
         assert g
         operator = Variable("x").assignment(
-            g.V().has("name", "gremlin").out("knows").out("knows").values("name"))
+            g.V().has("name", "gremlin").out("knows").out("knows").values("name")
+        )
         assert operator
-        assert operator.evaluate() == 'x=g.V().has("name","gremlin").out("knows").out("knows").values("name");'
+        assert (
+            operator.evaluate()
+            == 'x=g.V().has("name","gremlin").out("knows").out("knows").values("name");'
+        )

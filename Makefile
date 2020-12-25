@@ -50,11 +50,11 @@ isort: ## isort
 
 .PHONY: black
 black: ## black
-	find ${SRC} -name "*.py" | xargs black
+	find ${SRC} ${TESTS} -name "*.py" | xargs black
 
 .PHONY: flake8
 flake8: ## flake8
-	flake8 --max-line-length=120 ${SRC}
+	flake8 --max-line-length=120 ${SRC} ${TESTS}
 
 .PHONY: radon-cc
 radon-cc: ## radon compute Cyclomatic Complexity (CC)
@@ -78,7 +78,7 @@ xenon: ## xenon
 
 .PHONY: mypy
 mypy: ## mypy
-	mypy --strict ${SRC}
+	mypy --strict ${SRC} ${TESTS}
 
 .PHONY: pytest
 pytest: ## pytest
