@@ -94,3 +94,13 @@ class MethodCallNode(MultipleNode):
             DotNode(),
             CallNode(CallNameNode(method_name), ArgumentListNode(argument_list)),
         ]
+
+
+class AssignmentStatement(MultipleNode):
+    def __init__(self, identifier: IdentifierNode, node: Node):
+        self.nodes = [
+            identifier,
+            EqualNode(),
+            node,
+            SemicolonNode(),
+        ]

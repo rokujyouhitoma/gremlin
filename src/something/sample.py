@@ -2,12 +2,11 @@ import typing
 from dataclasses import dataclass
 
 from something.nodes import (
-    EqualNode,
+    AssignmentStatement,
     IdentifierNode,
     MethodCallNode,
     MultipleNode,
     Node,
-    SemicolonNode,
     gNode,
 )
 
@@ -38,16 +37,6 @@ class GraphTraversal(MultipleNode):
     def values(self, propertyKey: str) -> "GraphTraversal":
         self.nodes.append(MethodCallNode("values", [propertyKey]))
         return self
-
-
-class AssignmentStatement(MultipleNode):
-    def __init__(self, identifier: IdentifierNode, node: Node):
-        self.nodes = [
-            identifier,
-            EqualNode(),
-            node,
-            SemicolonNode(),
-        ]
 
 
 @dataclass
