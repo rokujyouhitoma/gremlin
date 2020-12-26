@@ -1,9 +1,9 @@
-class TestSomething:
+class TestGremlin:
     # See: https://tinkerpop.apache.org/
 
     def test_case0(self) -> None:
-        from something.nodes import gNode
-        from something.sample import GraphTraversal, Variable
+        from gremlin.nodes import gNode
+        from gremlin.sample import GraphTraversal, Variable
 
         g = GraphTraversal([gNode()])
         assert g
@@ -17,8 +17,8 @@ class TestSomething:
         )
 
     def test_case1(self) -> None:
-        from something.nodes import gNode
-        from something.sample import GraphTraversal
+        from gremlin.nodes import gNode
+        from gremlin.sample import GraphTraversal
 
         g = GraphTraversal([gNode()])
         assert g
@@ -30,8 +30,8 @@ class TestSomething:
         )
 
     def test_case2(self) -> None:
-        from something.nodes import gNode
-        from something.sample import GraphTraversal, as_
+        from gremlin.nodes import gNode
+        from gremlin.sample import GraphTraversal, as_
 
         g = GraphTraversal([gNode()])
         assert g
@@ -57,8 +57,8 @@ class TestSomething:
         )
 
     def test_case3(self) -> None:
-        from something.nodes import gNode
-        from something.sample import GraphTraversal, in_, has
+        from gremlin.nodes import gNode
+        from gremlin.sample import GraphTraversal, in_, has
 
         g = GraphTraversal([gNode()])
         assert g

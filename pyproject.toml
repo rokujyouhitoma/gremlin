@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "something"
+name = "gremlin"
 version = "0.0.1"
-description = "something"
+description = "gremlin"
 authors = ["Ike Tohru <ike.tohru@gmail.com>"]
 license = "MIT"
 

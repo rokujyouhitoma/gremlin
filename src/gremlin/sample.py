@@ -1,7 +1,7 @@
 import typing
 from dataclasses import dataclass, field
 
-from something.nodes import (
+from gremlin.nodes import (
     ArgumentListNode,
     AssignmentStatement,
     CallNameNode,
