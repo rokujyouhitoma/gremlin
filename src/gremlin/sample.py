@@ -40,6 +40,10 @@ class GraphTraversal(MultipleNode):
         self.nodes.append(MethodCallNode("count", []))
         return self
 
+    def groupCount(self) -> "GraphTraversal":
+        self.nodes.append(MethodCallNode("groupCount", []))
+        return self
+
     def has(self, propertyKey: str, value: typing.Any) -> "GraphTraversal":
         self.nodes.append(
             MethodCallNode("has", [StringNode(propertyKey), StringNode(value)])
@@ -86,6 +90,10 @@ class GraphTraversal(MultipleNode):
         self.nodes.append(MethodCallNode("values", [StringNode(propertyKey)]))
         return self
 
+    def where(self, *args: "GraphTraversal") -> "GraphTraversal":
+        self.nodes.append(MethodCallNodeArgumentsNode("where", args))
+        return self
+
 
 @dataclass
 class Variable(MultipleNode):
@@ -116,4 +124,10 @@ def has(propertyKey: str, value: typing.Any) -> GraphTraversal:
 def in_(edgeLabel: str) -> GraphTraversal:
     return GraphTraversal(
         [CallNode(CallNameNode("in"), ArgumentListNode([StringNode(edgeLabel)]))]
+    )
+
+
+def neq(value: str) -> GraphTraversal:
+    return GraphTraversal(
+        [CallNode(CallNameNode("neq"), ArgumentListNode([StringNode(value)]))]
     )

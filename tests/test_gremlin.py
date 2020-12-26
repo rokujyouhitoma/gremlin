@@ -75,3 +75,25 @@ class TestGremlin:
             node.evaluate()
             == 'g.V().has("name","gremlin").repeat(in("manages")).until(has("title","ceo")).path().by("name")'
         )
+
+    def test_case4(self) -> None:
+        from gremlin.nodes import gNode
+        from gremlin.sample import GraphTraversal, neq
+
+        g = GraphTraversal([gNode()])
+        assert g
+        node = (
+            g.V()
+            .has("name", "gremlin")
+            .as_("a")
+            .out("created")
+            .in_("created")
+            .where(neq("a"))
+            .groupCount()
+            .by("title")
+        )
+        assert node
+        assert (
+            node.evaluate() == 'g.V().has("name","gremlin").as("a")'
+            '.out("created").in("created").where(neq("a")).groupCount().by("title")'
+        )
