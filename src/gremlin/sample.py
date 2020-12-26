@@ -9,7 +9,6 @@ from gremlin.nodes import (
     IdentifierNode,
     IntegerNode,
     MethodCallNode,
-    MethodCallNodeArgumentsNode,
     MultipleNode,
     Node,
     StringNode,
@@ -59,7 +58,7 @@ class GraphTraversal(MultipleNode):
         return self
 
     def match(self, *args: "GraphTraversal") -> "GraphTraversal":
-        self.nodes.append(MethodCallNodeArgumentsNode("match", args))
+        self.nodes.append(MethodCallNode("match", args))
         return self
 
     def out(self, edgeLabel: str) -> "GraphTraversal":
@@ -71,11 +70,11 @@ class GraphTraversal(MultipleNode):
         return self
 
     def repeat(self, *args: "GraphTraversal") -> "GraphTraversal":
-        self.nodes.append(MethodCallNodeArgumentsNode("repeat", args))
+        self.nodes.append(MethodCallNode("repeat", args))
         return self
 
     def until(self, *args: "GraphTraversal") -> "GraphTraversal":
-        self.nodes.append(MethodCallNodeArgumentsNode("until", args))
+        self.nodes.append(MethodCallNode("until", args))
         return self
 
     def select(self, selectKey: str) -> "GraphTraversal":
@@ -91,7 +90,7 @@ class GraphTraversal(MultipleNode):
         return self
 
     def where(self, *args: "GraphTraversal") -> "GraphTraversal":
-        self.nodes.append(MethodCallNodeArgumentsNode("where", args))
+        self.nodes.append(MethodCallNode("where", args))
         return self
 
 

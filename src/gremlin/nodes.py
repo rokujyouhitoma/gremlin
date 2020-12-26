@@ -101,14 +101,6 @@ class CallNode(MultipleNode):
 
 
 class MethodCallNode(MultipleNode):
-    def __init__(self, method_name: str, argument_list: typing.Sequence[typing.Any]):
-        self.nodes = [
-            DotNode(),
-            CallNode(CallNameNode(method_name), ArgumentListNode(argument_list)),
-        ]
-
-
-class MethodCallNodeArgumentsNode(MultipleNode):
     def __init__(self, method_name: str, argument_list: typing.Sequence[Node]):
         self.nodes = [
             DotNode(),
