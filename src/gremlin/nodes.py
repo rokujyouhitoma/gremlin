@@ -37,11 +37,6 @@ class IdentifierNode(ValueNode):
 
 
 @dataclass
-class DotNode(ValueNode):
-    value: str = "."
-
-
-@dataclass
 class EqualNode(ValueNode):
     value: str = "="
 
@@ -78,40 +73,25 @@ class CallNameNode(ValueNode):
     pass
 
 
-@dataclass
-class ArgumentListNode(Node):
-    argument_list: typing.Sequence[typing.Any]
-
-    def evaluate(self) -> str:
-        if not len(self.argument_list):
-            return ""
-        return ",".join([argument.evaluate() for argument in self.argument_list])
-
-
 class CallNode(MultipleNode):
-    def __init__(
-        self, call_name_node: CallNameNode, argument_list_node: ArgumentListNode
-    ):
-        self.nodes = [
-            call_name_node,
-            OpenBlacketNode(),
-            argument_list_node,
-            CloseBlacketNode(),
-        ]
+    nodes: typing.List[Node] = []
 
-
-class MethodCallNode(MultipleNode):
     def __init__(self, method_name: str, argument_list: typing.Sequence[Node]):
-        self.nodes = [
-            DotNode(),
-            CallNameNode(method_name),
-        ]
+        self.nodes = []
+        self.nodes.append(CallNameNode(method_name))
         self.nodes.append(OpenBlacketNode())
         for index, node in enumerate(argument_list):
             if index != 0:
                 self.nodes.append(ValueNode(","))
             self.nodes.append(node)
         self.nodes.append(CloseBlacketNode())
+
+
+class MethodCallNode(CallNode):
+    nodes: typing.List[Node] = []
+
+    def __init__(self, method_name: str, argument_list: typing.Sequence[Node]):
+        super().__init__("." + method_name, argument_list)
 
 
 class AssignmentStatement(MultipleNode):

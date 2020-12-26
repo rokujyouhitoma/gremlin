@@ -2,9 +2,7 @@ import typing
 from dataclasses import dataclass, field
 
 from gremlin.nodes import (
-    ArgumentListNode,
     AssignmentStatement,
-    CallNameNode,
     CallNode,
     IdentifierNode,
     IntegerNode,
@@ -104,29 +102,18 @@ class Variable(MultipleNode):
 
 
 def as_(stepLabel: str) -> GraphTraversal:
-    return GraphTraversal(
-        [CallNode(CallNameNode("as"), ArgumentListNode([StringNode(stepLabel)]))]
-    )
+    return GraphTraversal([CallNode("as", [StringNode(stepLabel)])])
 
 
 def has(propertyKey: str, value: typing.Any) -> GraphTraversal:
     return GraphTraversal(
-        [
-            CallNode(
-                CallNameNode("has"),
-                ArgumentListNode([StringNode(propertyKey), StringNode(value)]),
-            )
-        ]
+        [CallNode("has", [StringNode(propertyKey), StringNode(value)])]
     )
 
 
 def in_(edgeLabel: str) -> GraphTraversal:
-    return GraphTraversal(
-        [CallNode(CallNameNode("in"), ArgumentListNode([StringNode(edgeLabel)]))]
-    )
+    return GraphTraversal([CallNode("in", [StringNode(edgeLabel)])])
 
 
 def neq(value: str) -> GraphTraversal:
-    return GraphTraversal(
-        [CallNode(CallNameNode("neq"), ArgumentListNode([StringNode(value)]))]
-    )
+    return GraphTraversal([CallNode("neq", [StringNode(value)])])
