@@ -34,12 +34,13 @@ class GraphTraversal(MultipleNode):
         self.nodes.append(MethodCallNode("as", [StringNode(stepLabel)]))
         return self
 
-    def by(self, key: str) -> "GraphTraversal":
-        self.nodes.append(MethodCallNode("by", [StringNode(key)]))
-        return self
-
-    def by2(self, *args: "GraphTraversal") -> "GraphTraversal":
-        self.nodes.append(MethodCallNode("by", args))
+    def by(self, *args: typing.Union[str, "GraphTraversal"]) -> "GraphTraversal":
+        if isinstance(args[0], str):
+            key = args[0]
+            self.nodes.append(MethodCallNode("by", [StringNode(key)]))
+        else:
+            argument_list = typing.cast(typing.Sequence[Node], args)
+            self.nodes.append(MethodCallNode("by", argument_list))
         return self
 
     def count(self) -> "GraphTraversal":

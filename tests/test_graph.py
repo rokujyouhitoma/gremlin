@@ -114,7 +114,7 @@ class TestGremlin:
             .where(not_(within("stash")))
             .groupCount()
             .order(local)
-            .by2(values, desc)
+            .by(values, desc)
         )
         assert node
         assert (
