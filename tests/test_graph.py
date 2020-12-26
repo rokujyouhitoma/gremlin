@@ -1,20 +1,6 @@
 class TestGremlin:
+    # Language sample by Apache TinkerPop official site.
     # See: https://tinkerpop.apache.org/
-
-    def test_case0(self) -> None:
-        from gremlin.nodes import gNode
-        from gremlin.graph import GraphTraversal, Variable
-
-        g = GraphTraversal([gNode()])
-        assert g
-        node = Variable("x").assignment(
-            g.V().has("name", "gremlin").out("knows").out("knows").values("name")
-        )
-        assert node
-        assert (
-            node.evaluate()
-            == 'x=g.V().has("name","gremlin").out("knows").out("knows").values("name");'
-        )
 
     def test_case1(self) -> None:
         from gremlin.nodes import gNode
@@ -123,4 +109,67 @@ class TestGremlin:
             '.in("bought").out("bought")'
             '.where(not(within("stash")))'
             ".groupCount().order(local).by(values,desc)"
+        )
+
+    def test_case6(self) -> None:
+        from gremlin.nodes import gNode
+        from gremlin.graph import GraphTraversal, outE, desc
+
+        g = GraphTraversal([gNode()])
+        assert g
+        node = (
+            g.V()
+            .hasLabel("person")
+            .pageRank()
+            .by("friendRank")
+            .by(outE("knows"))
+            .order()
+            .by("friendRank", desc)
+            .limit(10)
+        )
+        assert node
+        assert (
+            node.evaluate()
+            == 'g.V().hasLabel("person").pageRank().by("friendRank").by(outE("knows"))'
+            '.order().by("friendRank",desc).limit(10)'
+        )
+
+    def test_case7(self) -> None:
+        from gremlin.nodes import gNode
+        from gremlin.graph import GraphTraversal
+
+        g = GraphTraversal([gNode()])
+        assert g
+        name = "name1"
+        property = "property1"
+        node = (
+            g.V()
+            .has("name", name)
+            .out("knows")
+            .out("created")
+            .values(property)
+            .mean()
+            .next()
+        )
+        assert node
+        assert (
+            node.evaluate()
+            == 'g.V().has("name","name1").out("knows").out("created").values("property1").mean().next()'
+        )
+
+
+class TestVariableAssignment:
+    def test_case(self) -> None:
+        from gremlin.nodes import gNode
+        from gremlin.graph import GraphTraversal, Variable
+
+        g = GraphTraversal([gNode()])
+        assert g
+        node = Variable("x").assignment(
+            g.V().has("name", "gremlin").out("knows").out("knows").values("name")
+        )
+        assert node
+        assert (
+            node.evaluate()
+            == 'x=g.V().has("name","gremlin").out("knows").out("knows").values("name");'
         )
