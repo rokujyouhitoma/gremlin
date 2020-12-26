@@ -10,6 +10,7 @@ from gremlin.nodes import (
     MultipleNode,
     Node,
     StringNode,
+    ValueNode,
 )
 
 
@@ -25,12 +26,20 @@ class GraphTraversal(MultipleNode):
         self.nodes.append(MethodCallNode("addV", [StringNode(vertexLabel)]))
         return self
 
+    def aggregate(self, sideEffectKey: str = "") -> "GraphTraversal":
+        self.nodes.append(MethodCallNode("aggregate", [StringNode(sideEffectKey)]))
+        return self
+
     def as_(self, stepLabel: str) -> "GraphTraversal":
         self.nodes.append(MethodCallNode("as", [StringNode(stepLabel)]))
         return self
 
     def by(self, key: str) -> "GraphTraversal":
         self.nodes.append(MethodCallNode("by", [StringNode(key)]))
+        return self
+
+    def by2(self, *args: "GraphTraversal") -> "GraphTraversal":
+        self.nodes.append(MethodCallNode("by", args))
         return self
 
     def count(self) -> "GraphTraversal":
@@ -55,12 +64,20 @@ class GraphTraversal(MultipleNode):
         self.nodes.append(MethodCallNode("is", [IntegerNode(value)]))
         return self
 
+    def not_(self, *args: "GraphTraversal") -> "GraphTraversal":
+        self.nodes.append(MethodCallNode("not", args))
+        return self
+
     def match(self, *args: "GraphTraversal") -> "GraphTraversal":
         self.nodes.append(MethodCallNode("match", args))
         return self
 
     def out(self, edgeLabel: str) -> "GraphTraversal":
         self.nodes.append(MethodCallNode("out", [StringNode(edgeLabel)]))
+        return self
+
+    def order(self, *args: "GraphTraversal") -> "GraphTraversal":
+        self.nodes.append(MethodCallNode("order", args))
         return self
 
     def path(self) -> "GraphTraversal":
@@ -105,10 +122,20 @@ def as_(stepLabel: str) -> GraphTraversal:
     return GraphTraversal([CallNode("as", [StringNode(stepLabel)])])
 
 
+desc = GraphTraversal([ValueNode("desc")])
+
+
 def has(propertyKey: str, value: typing.Any) -> GraphTraversal:
     return GraphTraversal(
         [CallNode("has", [StringNode(propertyKey), StringNode(value)])]
     )
+
+
+local = GraphTraversal([ValueNode("local")])
+
+
+def not_(*args: "GraphTraversal") -> GraphTraversal:
+    return GraphTraversal([CallNode("not", args)])
 
 
 def in_(edgeLabel: str) -> GraphTraversal:
@@ -117,3 +144,10 @@ def in_(edgeLabel: str) -> GraphTraversal:
 
 def neq(value: str) -> GraphTraversal:
     return GraphTraversal([CallNode("neq", [StringNode(value)])])
+
+
+def within(label: str) -> GraphTraversal:
+    return GraphTraversal([CallNode("within", [StringNode(label)])])
+
+
+values = GraphTraversal([ValueNode("values")])

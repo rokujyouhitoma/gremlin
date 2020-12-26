@@ -97,3 +97,30 @@ class TestGremlin:
             node.evaluate() == 'g.V().has("name","gremlin").as("a")'
             '.out("created").in("created").where(neq("a")).groupCount().by("title")'
         )
+
+    def test_case5(self) -> None:
+        from gremlin.nodes import gNode
+        from gremlin.graph import GraphTraversal, not_, within, local, values, desc
+
+        g = GraphTraversal([gNode()])
+        assert g
+        node = (
+            g.V()
+            .has("name", "gremlin")
+            .out("bought")
+            .aggregate("stash")
+            .in_("bought")
+            .out("bought")
+            .where(not_(within("stash")))
+            .groupCount()
+            .order(local)
+            .by2(values, desc)
+        )
+        assert node
+        assert (
+            node.evaluate()
+            == 'g.V().has("name","gremlin").out("bought").aggregate("stash")'
+            '.in("bought").out("bought")'
+            '.where(not(within("stash")))'
+            ".groupCount().order(local).by(values,desc)"
+        )
