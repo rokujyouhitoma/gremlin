@@ -62,6 +62,18 @@ class GraphTraversal(MultipleNode):
         self.nodes.append(MethodCallNode("out", [StringNode(edgeLabel)]))
         return self
 
+    def path(self) -> "GraphTraversal":
+        self.nodes.append(MethodCallNode("path", []))
+        return self
+
+    def repeat(self, *args: "GraphTraversal") -> "GraphTraversal":
+        self.nodes.append(MethodCallNodeArgumentsNode("repeat", args))
+        return self
+
+    def until(self, *args: "GraphTraversal") -> "GraphTraversal":
+        self.nodes.append(MethodCallNodeArgumentsNode("until", args))
+        return self
+
     def select(self, selectKey: str) -> "GraphTraversal":
         self.nodes.append(MethodCallNode("select", [StringNode(selectKey)]))
         return self
@@ -87,4 +99,21 @@ class Variable(MultipleNode):
 def as_(stepLabel: str) -> GraphTraversal:
     return GraphTraversal(
         [CallNode(CallNameNode("as"), ArgumentListNode([StringNode(stepLabel)]))]
+    )
+
+
+def has(propertyKey: str, value: typing.Any) -> GraphTraversal:
+    return GraphTraversal(
+        [
+            CallNode(
+                CallNameNode("has"),
+                ArgumentListNode([StringNode(propertyKey), StringNode(value)]),
+            )
+        ]
+    )
+
+
+def in_(edgeLabel: str) -> GraphTraversal:
+    return GraphTraversal(
+        [CallNode(CallNameNode("in"), ArgumentListNode([StringNode(edgeLabel)]))]
     )
