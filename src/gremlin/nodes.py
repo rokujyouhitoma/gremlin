@@ -61,6 +61,11 @@ class CloseBlacketNode(ValueNode):
     value: str = ")"
 
 
+@dataclass
+class CommaNode(ValueNode):
+    value: str = ","
+
+
 class MultipleNode(Node):
     nodes: typing.List[Node] = []
 
@@ -82,7 +87,7 @@ class CallNode(MultipleNode):
         self.nodes.append(OpenBlacketNode())
         for index, node in enumerate(argument_list):
             if index != 0:
-                self.nodes.append(ValueNode(","))
+                self.nodes.append(CommaNode())
             self.nodes.append(node)
         self.nodes.append(CloseBlacketNode())
 
