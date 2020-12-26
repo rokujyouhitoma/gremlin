@@ -3,7 +3,7 @@ class TestGremlin:
 
     def test_case0(self) -> None:
         from gremlin.nodes import gNode
-        from gremlin.sample import GraphTraversal, Variable
+        from gremlin.graph import GraphTraversal, Variable
 
         g = GraphTraversal([gNode()])
         assert g
@@ -18,7 +18,7 @@ class TestGremlin:
 
     def test_case1(self) -> None:
         from gremlin.nodes import gNode
-        from gremlin.sample import GraphTraversal
+        from gremlin.graph import GraphTraversal
 
         g = GraphTraversal([gNode()])
         assert g
@@ -31,7 +31,7 @@ class TestGremlin:
 
     def test_case2(self) -> None:
         from gremlin.nodes import gNode
-        from gremlin.sample import GraphTraversal, as_
+        from gremlin.graph import GraphTraversal, as_
 
         g = GraphTraversal([gNode()])
         assert g
@@ -58,7 +58,7 @@ class TestGremlin:
 
     def test_case3(self) -> None:
         from gremlin.nodes import gNode
-        from gremlin.sample import GraphTraversal, in_, has
+        from gremlin.graph import GraphTraversal, in_, has
 
         g = GraphTraversal([gNode()])
         assert g
@@ -78,7 +78,7 @@ class TestGremlin:
 
     def test_case4(self) -> None:
         from gremlin.nodes import gNode
-        from gremlin.sample import GraphTraversal, neq
+        from gremlin.graph import GraphTraversal, neq
 
         g = GraphTraversal([gNode()])
         assert g
