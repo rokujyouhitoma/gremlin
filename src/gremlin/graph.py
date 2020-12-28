@@ -11,6 +11,7 @@ from gremlin.nodes import (
     Node,
     StringNode,
     ValueNode,
+    gNode,
 )
 
 
@@ -19,10 +20,12 @@ class GraphTraversal(MultipleNode):
     nodes: typing.List[Node] = field(default_factory=list)
 
     def addE(self, edgeLabel: str) -> "GraphTraversal":
+        self.nodes = [gNode()]
         self.nodes.append(MethodCallNode("addE", [StringNode(edgeLabel)]))
         return self
 
     def addV(self, vertexLabel: str = "") -> "GraphTraversal":
+        self.nodes = [gNode()]
         self.nodes.append(MethodCallNode("addV", [StringNode(vertexLabel)]))
         return self
 
@@ -114,6 +117,7 @@ class GraphTraversal(MultipleNode):
         return self
 
     def V(self) -> "GraphTraversal":
+        self.nodes = [gNode()]
         self.nodes.append(MethodCallNode("V", []))
         return self
 
