@@ -1,7 +1,39 @@
-class TestGremlin:
-    # Language sample by Apache TinkerPop official site.
-    # See: https://tinkerpop.apache.org/
+class TestGraphTraversal:
+    def test_interfaces(self) -> None:
+        from gremlin.graph import GraphTraversal
 
+        g = GraphTraversal()
+        assert g
+        g.addE("")
+        g.addV("")
+        g.aggregate("")
+        g.and_(g, g)
+        g.as_("")
+        g.by(g, g)
+        g.count()
+        g.groupCount()
+        g.has("key", "value")
+        g.hasLabel("")
+        g.limit(0)
+        g.in_("")
+        g.in_("")
+        g.next()
+        g.not_(g, g)
+        g.match(g, g)
+        g.mean()
+        g.pageRank()
+        g.out("")
+        g.order(g, g)
+        g.path()
+        g.repeat(g, g)
+        g.until(g, g)
+        g.select("")
+        g.V()
+        g.values("")
+        g.where(g, g)
+
+
+class TestDefaultGraphTraversal:
     def test_case1(self) -> None:
         from gremlin.graph import DefaultGraphTraversal
 
@@ -155,20 +187,4 @@ class TestGremlin:
         assert (
             node.evaluate()
             == 'g.V().has("name","name1").out("knows").out("created").values("property1").mean().next()'
-        )
-
-
-class TestVariableAssignment:
-    def test_case(self) -> None:
-        from gremlin.graph import DefaultGraphTraversal, Variable
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = Variable("x").assignment(
-            g.V().has("name", "gremlin").out("knows").out("knows").values("name")
-        )
-        assert node
-        assert (
-            node.evaluate()
-            == 'x=g.V().has("name","gremlin").out("knows").out("knows").values("name");'
         )
