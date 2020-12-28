@@ -1,6 +1,6 @@
 from .globals import as_, desc, has, in_, local, neq, not_, outE, values, within
 from .graph import Variable
-from .traversals import GraphTraversal
+from .traversals import DefaultGraphTraversal, GraphTraversal
 
 __all__ = [
     "as_",
@@ -14,5 +14,6 @@ __all__ = [
     "values",
     "within",
     "Variable",
+    "DefaultGraphTraversal",
     "GraphTraversal",
 ]

@@ -8,6 +8,14 @@ class Node:
 
 
 @dataclass
+class AnyNode(Node):
+    node: typing.Any
+
+    def evaluate(self) -> str:
+        return typing.cast(Node, self.node).evaluate()
+
+
+@dataclass
 class ValueNode(Node):
     value: str
 

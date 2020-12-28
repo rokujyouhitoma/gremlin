@@ -3,9 +3,9 @@ class TestGremlin:
     # See: https://tinkerpop.apache.org/
 
     def test_case1(self) -> None:
-        from gremlin.graph import GraphTraversal
+        from gremlin.graph import DefaultGraphTraversal
 
-        g = GraphTraversal()
+        g = DefaultGraphTraversal()
         assert g
         node = g.V().has("name", "gremlin").out("knows").out("knows").values("name")
         assert node
@@ -15,9 +15,9 @@ class TestGremlin:
         )
 
     def test_case2(self) -> None:
-        from gremlin.graph import GraphTraversal, as_
+        from gremlin.graph import DefaultGraphTraversal, as_
 
-        g = GraphTraversal()
+        g = DefaultGraphTraversal()
         assert g
         node = (
             g.V()
@@ -41,9 +41,9 @@ class TestGremlin:
         )
 
     def test_case3(self) -> None:
-        from gremlin.graph import GraphTraversal, in_, has
+        from gremlin.graph import DefaultGraphTraversal, in_, has
 
-        g = GraphTraversal()
+        g = DefaultGraphTraversal()
         assert g
         node = (
             g.V()
@@ -60,9 +60,9 @@ class TestGremlin:
         )
 
     def test_case4(self) -> None:
-        from gremlin.graph import GraphTraversal, neq
+        from gremlin.graph import DefaultGraphTraversal, neq
 
-        g = GraphTraversal()
+        g = DefaultGraphTraversal()
         assert g
         node = (
             g.V()
@@ -81,9 +81,16 @@ class TestGremlin:
         )
 
     def test_case5(self) -> None:
-        from gremlin.graph import GraphTraversal, not_, within, local, values, desc
+        from gremlin.graph import (
+            DefaultGraphTraversal,
+            not_,
+            within,
+            local,
+            values,
+            desc,
+        )
 
-        g = GraphTraversal()
+        g = DefaultGraphTraversal()
         assert g
         node = (
             g.V()
@@ -107,9 +114,9 @@ class TestGremlin:
         )
 
     def test_case6(self) -> None:
-        from gremlin.graph import GraphTraversal, outE, desc
+        from gremlin.graph import DefaultGraphTraversal, outE, desc
 
-        g = GraphTraversal()
+        g = DefaultGraphTraversal()
         assert g
         node = (
             g.V()
@@ -129,9 +136,9 @@ class TestGremlin:
         )
 
     def test_case7(self) -> None:
-        from gremlin.graph import GraphTraversal
+        from gremlin.graph import DefaultGraphTraversal
 
-        g = GraphTraversal()
+        g = DefaultGraphTraversal()
         assert g
         name = "name1"
         property = "property1"
@@ -153,9 +160,9 @@ class TestGremlin:
 
 class TestVariableAssignment:
     def test_case(self) -> None:
-        from gremlin.graph import GraphTraversal, Variable
+        from gremlin.graph import DefaultGraphTraversal, Variable
 
-        g = GraphTraversal()
+        g = DefaultGraphTraversal()
         assert g
         node = Variable("x").assignment(
             g.V().has("name", "gremlin").out("knows").out("knows").values("name")
