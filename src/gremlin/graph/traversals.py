@@ -23,6 +23,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def aggregate(self, sideEffectKey: str = "") -> "GraphTraversal":
         pass
 
+    def and_(self, *args: "GraphTraversal") -> "GraphTraversal":
+        pass
+
     def as_(self, stepLabel: str) -> "GraphTraversal":
         pass
 
@@ -109,6 +112,11 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
 
     def aggregate(self, sideEffectKey: str = "") -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("aggregate", [StringNode(sideEffectKey)]))
+        return self
+
+    def and_(self, *args: "GraphTraversal") -> "GraphTraversal":
+        argument_list = [AnyNode(v) for v in args]
+        self.nodes.append(MethodCallNode("and", argument_list))
         return self
 
     def as_(self, stepLabel: str) -> "DefaultGraphTraversal":
