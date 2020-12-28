@@ -16,7 +16,7 @@ class TestGraphTraversal:
         g.hasLabel("")
         g.limit(0)
         g.in_("")
-        g.in_("")
+        g.is_("")
         g.next()
         g.not_(g, g)
         g.match(g, g)
