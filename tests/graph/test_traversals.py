@@ -1,3 +1,6 @@
+import pytest
+
+
 class TestGraphTraversal:
     def test_interfaces(self) -> None:
         from gremlin.graph import GraphTraversal
@@ -34,6 +37,49 @@ class TestGraphTraversal:
 
 
 class TestDefaultGraphTraversal:
+    @pytest.mark.parametrize(
+        "test_label,expected",
+        [
+            ("", 'g.addE("")'),
+            ("test", 'g.addE("test")'),
+        ],
+    )
+    def test_addE(self, test_label: str, expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.addE(test_label)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_label,expected",
+        [
+            ("", 'g.addV("")'),
+            ("test", 'g.addV("test")'),
+        ],
+    )
+    def test_addV(self, test_label: str, expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.addV(test_label)
+        assert node
+        assert node.evaluate() == expected
+
+    def test_add_(self) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().and_()
+        assert node
+        assert node.evaluate() == "g.V().and()"
+
+
+class TestDefaultGraphTraversalUsecases:
     def test_case1(self) -> None:
         from gremlin.graph import DefaultGraphTraversal
 

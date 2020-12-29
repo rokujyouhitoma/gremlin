@@ -114,9 +114,8 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("aggregate", [StringNode(sideEffectKey)]))
         return self
 
-    def and_(self, *args: "GraphTraversal") -> "GraphTraversal":
-        argument_list = [AnyNode(v) for v in args]
-        self.nodes.append(MethodCallNode("and", argument_list))
+    def and_(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("and", [AnyNode(v) for v in args]))
         return self
 
     def as_(self, stepLabel: str) -> "DefaultGraphTraversal":
@@ -124,10 +123,12 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         return self
 
     def by(self, *args: typing.Union[str, "GraphTraversal"]) -> "DefaultGraphTraversal":
-        argument_list = [
-            StringNode(v) if isinstance(v, str) else AnyNode(v) for v in args
-        ]
-        self.nodes.append(MethodCallNode("by", argument_list))
+        self.nodes.append(
+            MethodCallNode(
+                "by",
+                [StringNode(v) if isinstance(v, str) else AnyNode(v) for v in args],
+            )
+        )
         return self
 
     def count(self) -> "DefaultGraphTraversal":
@@ -165,13 +166,11 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         return self
 
     def not_(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
-        argument_list = [AnyNode(v) for v in args]
-        self.nodes.append(MethodCallNode("not", argument_list))
+        self.nodes.append(MethodCallNode("not", [AnyNode(v) for v in args]))
         return self
 
     def match(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
-        argument_list = [AnyNode(v) for v in args]
-        self.nodes.append(MethodCallNode("match", argument_list))
+        self.nodes.append(MethodCallNode("match", [AnyNode(v) for v in args]))
         return self
 
     def mean(self) -> "DefaultGraphTraversal":
@@ -187,8 +186,7 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         return self
 
     def order(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
-        argument_list = [AnyNode(v) for v in args]
-        self.nodes.append(MethodCallNode("order", argument_list))
+        self.nodes.append(MethodCallNode("order", [AnyNode(v) for v in args]))
         return self
 
     def path(self) -> "DefaultGraphTraversal":
@@ -196,13 +194,11 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         return self
 
     def repeat(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
-        argument_list = [AnyNode(v) for v in args]
-        self.nodes.append(MethodCallNode("repeat", argument_list))
+        self.nodes.append(MethodCallNode("repeat", [AnyNode(v) for v in args]))
         return self
 
     def until(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
-        argument_list = [AnyNode(v) for v in args]
-        self.nodes.append(MethodCallNode("until", argument_list))
+        self.nodes.append(MethodCallNode("until", [AnyNode(v) for v in args]))
         return self
 
     def select(self, selectKey: str) -> "DefaultGraphTraversal":
@@ -219,6 +215,5 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         return self
 
     def where(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
-        argument_list = [AnyNode(v) for v in args]
-        self.nodes.append(MethodCallNode("where", argument_list))
+        self.nodes.append(MethodCallNode("where", [AnyNode(v) for v in args]))
         return self
