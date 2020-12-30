@@ -78,6 +78,15 @@ class TestDefaultGraphTraversal:
         assert node
         assert node.evaluate() == "g.V().and()"
 
+    def test_not_(self) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().not_()
+        assert node
+        assert node.evaluate() == "g.V().not()"
+
 
 class TestDefaultGraphTraversalUsecases:
     def test_case1(self) -> None:
