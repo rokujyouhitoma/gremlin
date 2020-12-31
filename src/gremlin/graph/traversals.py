@@ -62,10 +62,28 @@ class GraphTraversal(metaclass=ABCMeta):
     def id(self) -> "GraphTraversal":
         pass
 
+    def index(self) -> "GraphTraversal":
+        pass
+
+    def inE(self, *edgeLabels: str) -> "GraphTraversal":
+        pass
+
+    def inV(self) -> "GraphTraversal":
+        pass
+
     def in_(self, edgeLabel: str) -> "GraphTraversal":
         pass
 
     def is_(self, value: typing.Any) -> "GraphTraversal":
+        pass
+
+    def iterate(self) -> "GraphTraversal":
+        pass
+
+    def key(self) -> "GraphTraversal":
+        pass
+
+    def label(self) -> "GraphTraversal":
         pass
 
     def limit(self, limit: int) -> "GraphTraversal":
@@ -219,8 +237,32 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("in", [StringNode(edgeLabel)]))
         return self
 
+    def index(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("index", []))
+        return self
+
+    def inE(self, *edgeLabels: str) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("inE", [StringNode(v) for v in edgeLabels]))
+        return self
+
+    def inV(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("inV", []))
+        return self
+
     def is_(self, value: typing.Any) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("is", [IntegerNode(value)]))
+        return self
+
+    def iterate(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("iterate", []))
+        return self
+
+    def key(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("key", []))
+        return self
+
+    def label(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("label", []))
         return self
 
     def limit(self, limit: int) -> "DefaultGraphTraversal":
