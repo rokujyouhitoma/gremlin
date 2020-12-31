@@ -12,6 +12,7 @@ class TestGraphTraversal:
         g.aggregate("")
         g.and_(g, g)
         g.as_("")
+        g.both("")
         g.by(g, g)
         g.count()
         g.groupCount()
@@ -77,6 +78,24 @@ class TestDefaultGraphTraversal:
         node = g.V().and_()
         assert node
         assert node.evaluate() == "g.V().and()"
+
+
+    @pytest.mark.parametrize(
+        "test_labels,expected",
+        [
+            ([], 'g.V().both()'),
+            (["arg1"], 'g.V().both("arg1")'),
+            (["arg1","arg2"], 'g.V().both("arg1","arg2")'),
+        ],
+    )
+    def test_both(self, test_labels, expected) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().both(*test_labels)
+        assert node
+        assert node.evaluate() == expected
 
     def test_not_(self) -> None:
         from gremlin.graph import DefaultGraphTraversal
