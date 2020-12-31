@@ -39,10 +39,13 @@ class TestGraphTraversal:
         g.mean()
         g.min()
         g.next()
-        g.not_(g, g)
-        g.pageRank()
+        g.not_(g.V())
+        g.or_(g.V())
+        g.order(g)
+        g.otherV()
         g.out("")
-        g.order(g, g)
+        g.outE()
+        g.pageRank()
         g.path()
         g.repeat(g, g)
         g.until(g, g)
@@ -359,14 +362,87 @@ class TestDefaultGraphTraversal:
         assert node
         assert node.evaluate() == expected
 
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().next()"),
+        ],
+    )
+    def test_next(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().next(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
     def test_not_(self) -> None:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
         assert g
-        node = g.V().not_()
+        node = g.V().not_(g.V())
         assert node
-        assert node.evaluate() == "g.V().not()"
+        assert node.evaluate() == "g.V().not(g.V())"
+
+    def test_or_(self) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().or_(g.V())
+        assert node
+        assert node.evaluate() == "g.V().or(g.V())"
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().otherV()"),
+        ],
+    )
+    def test_otherV(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().otherV(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().out()"),
+            (["arg"], 'g.V().out("arg")'),
+            (["arg1", "arg2"], 'g.V().out("arg1","arg2")'),
+        ],
+    )
+    def test_out(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().out(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().outE()"),
+            (["arg"], 'g.V().outE("arg")'),
+            (["arg1", "arg2"], 'g.V().outE("arg1","arg2")'),
+        ],
+    )
+    def test_outE(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().outE(*test_args)
+        assert node
+        assert node.evaluate() == expected
 
 
 class TestDefaultGraphTraversalUsecases:

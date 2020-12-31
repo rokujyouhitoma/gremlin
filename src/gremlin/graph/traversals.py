@@ -104,16 +104,26 @@ class GraphTraversal(metaclass=ABCMeta):
     def next(self) -> "GraphTraversal":
         pass
 
-    def not_(self, *args: "GraphTraversal") -> "GraphTraversal":
+    def not_(self, notTraversal: "GraphTraversal") -> "GraphTraversal":
         pass
 
-    def pageRank(self) -> "GraphTraversal":
-        pass
-
-    def out(self, edgeLabel: str) -> "GraphTraversal":
+    def or_(self, orTraversals: "GraphTraversal") -> "GraphTraversal":
         pass
 
     def order(self, *args: "GraphTraversal") -> "GraphTraversal":
+        # TODO: Should support for order() and order(Scope scope)
+        pass
+
+    def otherV(self) -> "GraphTraversal":
+        pass
+
+    def out(self, *edgeLabels: str) -> "GraphTraversal":
+        pass
+
+    def outE(self, *edgeLabels: str) -> "GraphTraversal":
+        pass
+
+    def pageRank(self) -> "GraphTraversal":
         pass
 
     def path(self) -> "GraphTraversal":
@@ -295,20 +305,33 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("next", []))
         return self
 
-    def not_(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("not", [AnyNode(v) for v in args]))
+    def not_(self, notTraversal: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("not", [AnyNode(notTraversal)]))
+        return self
+
+    def or_(self, orTraversals: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("or", [AnyNode(orTraversals)]))
+        return self
+
+    def order(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
+        # TODO: Should support for order() and order(Scope scope)
+        self.nodes.append(MethodCallNode("order", [AnyNode(v) for v in args]))
+        return self
+
+    def otherV(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("otherV", []))
+        return self
+
+    def out(self, *edgeLabels: str) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("out", [StringNode(v) for v in edgeLabels]))
+        return self
+
+    def outE(self, *edgeLabels: str) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("outE", [StringNode(v) for v in edgeLabels]))
         return self
 
     def pageRank(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("pageRank", []))
-        return self
-
-    def out(self, edgeLabel: str) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("out", [StringNode(edgeLabel)]))
-        return self
-
-    def order(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("order", [AnyNode(v) for v in args]))
         return self
 
     def path(self) -> "DefaultGraphTraversal":
@@ -328,6 +351,8 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         return self
 
     def V(self) -> "DefaultGraphTraversal":
+        # TODO: ???
+        self = DefaultGraphTraversal()
         self.nodes = [gNode()]
         self.nodes.append(MethodCallNode("V", []))
         return self
