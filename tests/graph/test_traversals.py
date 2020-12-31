@@ -16,14 +16,18 @@ class TestGraphTraversal:
         g.as_("")
         g.both("")
         g.bothE("")
+        g.bothV()
         g.by(g, g)
         g.count()
+        g.drop()
+        g.elementMap("")
         g.groupCount()
         g.has("key", "value")
         g.hasLabel("")
-        g.limit(0)
+        g.id()
         g.in_("")
         g.is_("")
+        g.limit(0)
         g.next()
         g.not_(g, g)
         g.match(g, g)
@@ -129,6 +133,84 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().bothE(*test_labels)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().bothV()"),
+        ],
+    )
+    def test_bothV(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().bothV(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().drop()"),
+        ],
+    )
+    def test_drop(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().drop(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().elementMap()"),
+            (["arg"], 'g.V().elementMap("arg")'),
+            (["arg1", "arg2"], 'g.V().elementMap("arg1","arg2")'),
+        ],
+    )
+    def test_elementMap(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().elementMap(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            (["arg"], 'g.V().hasLabel("arg")'),
+            (["arg1", "arg2"], 'g.V().hasLabel("arg1","arg2")'),
+        ],
+    )
+    def test_hasLabel(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().hasLabel(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().id()"),
+        ],
+    )
+    def test_id(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().id(*test_args)
         assert node
         assert node.evaluate() == expected
 

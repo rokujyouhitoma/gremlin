@@ -35,10 +35,19 @@ class GraphTraversal(metaclass=ABCMeta):
     def bothE(self, *args: str) -> "GraphTraversal":
         pass
 
+    def bothV(self) -> "GraphTraversal":
+        pass
+
     def by(self, *args: typing.Union[str, "GraphTraversal"]) -> "GraphTraversal":
         pass
 
     def count(self) -> "GraphTraversal":
+        pass
+
+    def drop(self) -> "GraphTraversal":
+        pass
+
+    def elementMap(self, *propertyKeys: str) -> "GraphTraversal":
         pass
 
     def groupCount(self) -> "GraphTraversal":
@@ -47,16 +56,19 @@ class GraphTraversal(metaclass=ABCMeta):
     def has(self, propertyKey: str, value: typing.Any) -> "GraphTraversal":
         pass
 
-    def hasLabel(self, label: str) -> "GraphTraversal":
+    def hasLabel(self, label: str, *otherLabels: str) -> "GraphTraversal":
         pass
 
-    def limit(self, limit: int) -> "GraphTraversal":
+    def id(self) -> "GraphTraversal":
         pass
 
     def in_(self, edgeLabel: str) -> "GraphTraversal":
         pass
 
     def is_(self, value: typing.Any) -> "GraphTraversal":
+        pass
+
+    def limit(self, limit: int) -> "GraphTraversal":
         pass
 
     def next(self) -> "GraphTraversal":
@@ -148,6 +160,15 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         )
         return self
 
+    def bothV(self) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "bothV",
+                [],
+            )
+        )
+        return self
+
     def by(self, *args: typing.Union[str, "GraphTraversal"]) -> "DefaultGraphTraversal":
         self.nodes.append(
             MethodCallNode(
@@ -161,6 +182,19 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("count", []))
         return self
 
+    def drop(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("drop", []))
+        return self
+
+    def elementMap(self, *propertyKeys: str) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "elementMap",
+                [StringNode(v) for v in propertyKeys],
+            )
+        )
+        return self
+
     def groupCount(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("groupCount", []))
         return self
@@ -171,12 +205,14 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         )
         return self
 
-    def hasLabel(self, label: str) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("hasLabel", [StringNode(label)]))
+    def hasLabel(self, label: str, *otherLabels: str) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode("hasLabel", [StringNode(v) for v in (label, *otherLabels)])
+        )
         return self
 
-    def limit(self, limit: int) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("limit", [IntegerNode(limit)]))
+    def id(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("id", []))
         return self
 
     def in_(self, edgeLabel: str) -> "DefaultGraphTraversal":
@@ -185,6 +221,10 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
 
     def is_(self, value: typing.Any) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("is", [IntegerNode(value)]))
+        return self
+
+    def limit(self, limit: int) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("limit", [IntegerNode(limit)]))
         return self
 
     def next(self) -> "DefaultGraphTraversal":
