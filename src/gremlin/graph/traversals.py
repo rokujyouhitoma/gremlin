@@ -26,10 +26,13 @@ class GraphTraversal(metaclass=ABCMeta):
     def and_(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
-    def as_(self, stepLabel: str) -> "GraphTraversal":
+    def as_(self, stepLabel: str, *args: str) -> "GraphTraversal":
         pass
 
     def both(self, *args: str) -> "GraphTraversal":
+        pass
+
+    def bothE(self, *args: str) -> "GraphTraversal":
         pass
 
     def by(self, *args: typing.Union[str, "GraphTraversal"]) -> "GraphTraversal":
@@ -121,14 +124,25 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("and", [AnyNode(v) for v in args]))
         return self
 
-    def as_(self, stepLabel: str) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("as", [StringNode(stepLabel)]))
+    def as_(self, stepLabel: str, *args: str) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode("as", [StringNode(v) for v in (stepLabel, *args)])
+        )
         return self
 
     def both(self, *args: str) -> "DefaultGraphTraversal":
         self.nodes.append(
             MethodCallNode(
                 "both",
+                [StringNode(v) for v in args],
+            )
+        )
+        return self
+
+    def bothE(self, *args: str) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "bothE",
                 [StringNode(v) for v in args],
             )
         )

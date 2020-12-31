@@ -1,3 +1,5 @@
+import typing
+
 import pytest
 
 
@@ -13,6 +15,7 @@ class TestGraphTraversal:
         g.and_(g, g)
         g.as_("")
         g.both("")
+        g.bothE("")
         g.by(g, g)
         g.count()
         g.groupCount()
@@ -79,21 +82,53 @@ class TestDefaultGraphTraversal:
         assert node
         assert node.evaluate() == "g.V().and()"
 
+    @pytest.mark.parametrize(
+        "test_labels,expected",
+        [
+            (["arg1"], 'g.V().as("arg1")'),
+            (["arg1", "arg2"], 'g.V().as("arg1","arg2")'),
+        ],
+    )
+    def test_as_(self, test_labels: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().as_(*test_labels)
+        assert node
+        assert node.evaluate() == expected
 
     @pytest.mark.parametrize(
         "test_labels,expected",
         [
-            ([], 'g.V().both()'),
+            ([], "g.V().both()"),
             (["arg1"], 'g.V().both("arg1")'),
-            (["arg1","arg2"], 'g.V().both("arg1","arg2")'),
+            (["arg1", "arg2"], 'g.V().both("arg1","arg2")'),
         ],
     )
-    def test_both(self, test_labels, expected) -> None:
+    def test_both(self, test_labels: typing.List[str], expected: str) -> None:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
         assert g
         node = g.V().both(*test_labels)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_labels,expected",
+        [
+            ([], "g.V().bothE()"),
+            (["arg1"], 'g.V().bothE("arg1")'),
+            (["arg1", "arg2"], 'g.V().bothE("arg1","arg2")'),
+        ],
+    )
+    def test_bothE(self, test_labels: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().bothE(*test_labels)
         assert node
         assert node.evaluate() == expected
 
