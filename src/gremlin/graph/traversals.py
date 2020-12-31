@@ -89,16 +89,22 @@ class GraphTraversal(metaclass=ABCMeta):
     def limit(self, limit: int) -> "GraphTraversal":
         pass
 
+    def match(self, *args: "GraphTraversal") -> "GraphTraversal":
+        pass
+
+    def max(self) -> "GraphTraversal":
+        pass
+
+    def mean(self) -> "GraphTraversal":
+        pass
+
+    def min(self) -> "GraphTraversal":
+        pass
+
     def next(self) -> "GraphTraversal":
         pass
 
     def not_(self, *args: "GraphTraversal") -> "GraphTraversal":
-        pass
-
-    def match(self, *args: "GraphTraversal") -> "GraphTraversal":
-        pass
-
-    def mean(self) -> "GraphTraversal":
         pass
 
     def pageRank(self) -> "GraphTraversal":
@@ -269,20 +275,28 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("limit", [IntegerNode(limit)]))
         return self
 
+    def match(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("match", [AnyNode(v) for v in args]))
+        return self
+
+    def max(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("max", []))
+        return self
+
+    def mean(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("mean", []))
+        return self
+
+    def min(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("min", []))
+        return self
+
     def next(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("next", []))
         return self
 
     def not_(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("not", [AnyNode(v) for v in args]))
-        return self
-
-    def match(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("match", [AnyNode(v) for v in args]))
-        return self
-
-    def mean(self) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("mean", []))
         return self
 
     def pageRank(self) -> "DefaultGraphTraversal":

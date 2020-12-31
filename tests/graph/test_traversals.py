@@ -34,10 +34,12 @@ class TestGraphTraversal:
         g.key()
         g.label()
         g.limit(0)
+        g.match(g, g)
+        g.max()
+        g.mean()
+        g.min()
         g.next()
         g.not_(g, g)
-        g.match(g, g)
-        g.mean()
         g.pageRank()
         g.out("")
         g.order(g, g)
@@ -309,6 +311,51 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().label(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().max()"),
+        ],
+    )
+    def test_max(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().max(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().mean()"),
+        ],
+    )
+    def test_mean(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().mean(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().min()"),
+        ],
+    )
+    def test_min(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().min(*test_args)
         assert node
         assert node.evaluate() == expected
 
