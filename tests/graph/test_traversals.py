@@ -3,6 +3,15 @@ import typing
 import pytest
 
 
+class TestTraversal:
+    def test_interfaces(self) -> None:
+        from gremlin.graph import Traversal
+
+        g = Traversal()
+        assert g
+        g.next()
+
+
 class TestGraphTraversal:
     def test_interfaces(self) -> None:
         from gremlin.graph import GraphTraversal
@@ -38,13 +47,13 @@ class TestGraphTraversal:
         g.max()
         g.mean()
         g.min()
-        g.next()
         g.not_(g.V())
         g.or_(g.V())
         g.order(g)
         g.otherV()
         g.out("")
         g.outE()
+        g.outV()
         g.pageRank()
         g.path()
         g.repeat(g, g)
@@ -441,6 +450,21 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().outE(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().outV()"),
+        ],
+    )
+    def test_outV(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().outV(*test_args)
         assert node
         assert node.evaluate() == expected
 

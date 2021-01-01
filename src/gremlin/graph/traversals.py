@@ -13,6 +13,11 @@ from gremlin.nodes import (
 )
 
 
+class Traversal(metaclass=ABCMeta):
+    def next(self) -> "GraphTraversal":
+        pass
+
+
 class GraphTraversal(metaclass=ABCMeta):
     def addE(self, edgeLabel: str) -> "GraphTraversal":
         pass
@@ -101,9 +106,6 @@ class GraphTraversal(metaclass=ABCMeta):
     def min(self) -> "GraphTraversal":
         pass
 
-    def next(self) -> "GraphTraversal":
-        pass
-
     def not_(self, notTraversal: "GraphTraversal") -> "GraphTraversal":
         pass
 
@@ -121,6 +123,9 @@ class GraphTraversal(metaclass=ABCMeta):
         pass
 
     def outE(self, *edgeLabels: str) -> "GraphTraversal":
+        pass
+
+    def outV(self) -> "GraphTraversal":
         pass
 
     def pageRank(self) -> "GraphTraversal":
@@ -149,7 +154,7 @@ class GraphTraversal(metaclass=ABCMeta):
 
 
 @dataclass
-class DefaultGraphTraversal(GraphTraversal, MultipleNode):
+class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
     nodes: typing.List[Node] = field(default_factory=list)
 
     def addE(self, edgeLabel: str) -> "DefaultGraphTraversal":
@@ -328,6 +333,10 @@ class DefaultGraphTraversal(GraphTraversal, MultipleNode):
 
     def outE(self, *edgeLabels: str) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("outE", [StringNode(v) for v in edgeLabels]))
+        return self
+
+    def outV(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("outV", []))
         return self
 
     def pageRank(self) -> "DefaultGraphTraversal":
