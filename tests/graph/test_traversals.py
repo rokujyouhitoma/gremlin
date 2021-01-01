@@ -9,7 +9,11 @@ class TestTraversal:
 
         g = Traversal()
         assert g
-        g.next()
+        g.iterate()
+        g.next(1)
+        g.none()
+        g.toList()
+        g.toSet()
 
 
 class TestGraphTraversal:
@@ -375,14 +379,30 @@ class TestDefaultGraphTraversal:
         "test_args,expected",
         [
             ([], "g.V().next()"),
+            ([1], "g.V().next(1)"),
         ],
     )
-    def test_next(self, test_args: typing.List[str], expected: str) -> None:
+    def test_next(self, test_args: typing.List[int], expected: str) -> None:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
         assert g
         node = g.V().next(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().none()"),
+        ],
+    )
+    def test_none(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().none(*test_args)
         assert node
         assert node.evaluate() == expected
 
@@ -465,6 +485,36 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().outV(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().toList()"),
+        ],
+    )
+    def test_toList(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().toList(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().toSet()"),
+        ],
+    )
+    def test_toSet(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().toSet(*test_args)
         assert node
         assert node.evaluate() == expected
 

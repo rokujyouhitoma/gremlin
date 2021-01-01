@@ -14,7 +14,22 @@ from gremlin.nodes import (
 
 
 class Traversal(metaclass=ABCMeta):
-    def next(self) -> "GraphTraversal":
+    def iterate(self) -> "Traversal":
+        pass
+
+    def next(self, amount: int) -> "Traversal":
+        # TODO: Should support for -> default List<E>
+        pass
+
+    def none(self) -> "Traversal":
+        pass
+
+    def toList(self) -> "Traversal":
+        # TODO: Should support for -> default List<E>
+        pass
+
+    def toSet(self) -> "Traversal":
+        # TODO: Should support for -> default Set<E>
         pass
 
 
@@ -306,8 +321,13 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("min", []))
         return self
 
-    def next(self) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("next", []))
+    def next(self, amount: int = 0) -> "DefaultGraphTraversal":
+        args = [] if amount == 0 else [IntegerNode(amount)]
+        self.nodes.append(MethodCallNode("next", args))
+        return self
+
+    def none(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("none", []))
         return self
 
     def not_(self, notTraversal: "GraphTraversal") -> "DefaultGraphTraversal":
@@ -357,6 +377,14 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def select(self, selectKey: str) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("select", [StringNode(selectKey)]))
+        return self
+
+    def toList(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("toList", []))
+        return self
+
+    def toSet(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("toSet", []))
         return self
 
     def V(self) -> "DefaultGraphTraversal":
