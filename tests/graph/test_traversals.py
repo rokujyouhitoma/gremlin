@@ -61,11 +61,13 @@ class TestGraphTraversal:
         g.pageRank()
         g.path()
         g.repeat(g, g)
-        g.until(g, g)
         g.select("")
+        g.until(g, g)
         g.V()
+        g.value()
+        g.valueMap("")
         g.values("")
-        g.where(g, g)
+        g.where(g)
 
 
 class TestDefaultGraphTraversal:
@@ -515,6 +517,51 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().toSet(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().value()"),
+        ],
+    )
+    def test_value(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().value(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().valueMap()"),
+        ],
+    )
+    def test_valueMap(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().valueMap(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            (["arg"], 'g.V().values("arg")'),
+        ],
+    )
+    def test_values(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().values(*test_args)
         assert node
         assert node.evaluate() == expected
 

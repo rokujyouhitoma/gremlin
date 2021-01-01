@@ -152,19 +152,25 @@ class GraphTraversal(metaclass=ABCMeta):
     def repeat(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
-    def until(self, *args: "GraphTraversal") -> "GraphTraversal":
+    def select(self, selectKey: str) -> "GraphTraversal":
         pass
 
-    def select(self, selectKey: str) -> "GraphTraversal":
+    def until(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
     def V(self) -> "GraphTraversal":
         pass
 
+    def value(self) -> "GraphTraversal":
+        pass
+
+    def valueMap(self, *propertyKeys: str) -> "GraphTraversal":
+        pass
+
     def values(self, propertyKey: str) -> "GraphTraversal":
         pass
 
-    def where(self, *args: "GraphTraversal") -> "GraphTraversal":
+    def where(self, whereTraversal: "GraphTraversal") -> "GraphTraversal":
         pass
 
 
@@ -371,10 +377,6 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("repeat", [AnyNode(v) for v in args]))
         return self
 
-    def until(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("until", [AnyNode(v) for v in args]))
-        return self
-
     def select(self, selectKey: str) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("select", [StringNode(selectKey)]))
         return self
@@ -387,6 +389,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("toSet", []))
         return self
 
+    def until(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("until", [AnyNode(v) for v in args]))
+        return self
+
     def V(self) -> "DefaultGraphTraversal":
         # TODO: ???
         self = DefaultGraphTraversal()
@@ -394,10 +400,20 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("V", []))
         return self
 
+    def value(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("value", []))
+        return self
+
+    def valueMap(self, *propertyKeys: str) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode("valueMap", [StringNode(v) for v in propertyKeys])
+        )
+        return self
+
     def values(self, propertyKey: str) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("values", [StringNode(propertyKey)]))
         return self
 
-    def where(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("where", [AnyNode(v) for v in args]))
+    def where(self, whereTraversal: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("where", [AnyNode(whereTraversal)]))
         return self
