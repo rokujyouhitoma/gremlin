@@ -11,14 +11,14 @@ from gremlin.nodes import (
     StringNode,
     gNode,
 )
+from gremlin.structures import List
 
 
 class Traversal(metaclass=ABCMeta):
     def iterate(self) -> "Traversal":
         pass
 
-    def next(self, amount: int) -> "Traversal":
-        # TODO: Should support for -> default List<E>
+    def next(self, amount: int) -> List:
         pass
 
     def none(self) -> "Traversal":
@@ -327,10 +327,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("min", []))
         return self
 
-    def next(self, amount: int = 0) -> "DefaultGraphTraversal":
+    def next(self, amount: int = 0) -> List:
         args = [] if amount == 0 else [IntegerNode(amount)]
         self.nodes.append(MethodCallNode("next", args))
-        return self
+        return List(self.nodes)
 
     def none(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("none", []))
