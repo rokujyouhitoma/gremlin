@@ -37,7 +37,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def addE(self, edgeLabel: typing.Union[str, "GraphTraversal"]) -> "GraphTraversal":
         pass
 
-    def addV(self, vertexLabel: str = "") -> "GraphTraversal":
+    def addV(
+        self, vertexLabel: typing.Union[str, "GraphTraversal", None]
+    ) -> "GraphTraversal":
         pass
 
     def aggregate(self, sideEffectKey: str = "") -> "GraphTraversal":
@@ -194,9 +196,22 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         )
         return self
 
-    def addV(self, vertexLabel: str = "") -> "DefaultGraphTraversal":
+    def addV(
+        self, vertexLabel: typing.Union[str, "GraphTraversal", None] = None
+    ) -> "DefaultGraphTraversal":
         self.nodes = [gNode()]
-        self.nodes.append(MethodCallNode("addV", [StringNode(vertexLabel)]))
+        self.nodes.append(
+            MethodCallNode(
+                "addV",
+                []
+                if vertexLabel is None
+                else [
+                    StringNode(vertexLabel)
+                    if isinstance(vertexLabel, str)
+                    else AnyNode(vertexLabel)
+                ],
+            )
+        )
         return self
 
     def aggregate(self, sideEffectKey: str = "") -> "DefaultGraphTraversal":

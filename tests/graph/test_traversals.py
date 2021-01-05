@@ -73,18 +73,18 @@ class TestGraphTraversal:
 
 class TestDefaultGraphTraversal:
     @pytest.mark.parametrize(
-        "test_label,expected",
+        "test_labels,expected",
         [
-            ("", 'g.addE("")'),
-            ("test", 'g.addE("test")'),
+            ([""], 'g.addE("")'),
+            (["test"], 'g.addE("test")'),
         ],
     )
-    def test_addE(self, test_label: str, expected: str) -> None:
+    def test_addE(self, test_labels: typing.List[str], expected: str) -> None:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
         assert g
-        node = g.addE(test_label)
+        node = g.addE(*test_labels)
         assert node
         assert node.evaluate() == expected
 
@@ -98,18 +98,19 @@ class TestDefaultGraphTraversal:
         assert node.evaluate() == "g.addE(g.V())"
 
     @pytest.mark.parametrize(
-        "test_label,expected",
+        "test_labels,expected",
         [
-            ("", 'g.addV("")'),
-            ("test", 'g.addV("test")'),
+            ([], "g.addV()"),
+            ([""], 'g.addV("")'),
+            (["test"], 'g.addV("test")'),
         ],
     )
-    def test_addV(self, test_label: str, expected: str) -> None:
+    def test_addV(self, test_labels: typing.List[str], expected: str) -> None:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
         assert g
-        node = g.addV(test_label)
+        node = g.addV(*test_labels)
         assert node
         assert node.evaluate() == expected
 
