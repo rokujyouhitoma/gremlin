@@ -42,13 +42,13 @@ class GraphTraversal(metaclass=ABCMeta):
     ) -> "GraphTraversal":
         pass
 
-    def aggregate(self, sideEffectKey: str = "") -> "GraphTraversal":
+    def aggregate(self, sideEffectKey: str) -> "GraphTraversal":
         pass
 
-    def and_(self, *args: "GraphTraversal") -> "GraphTraversal":
+    def and_(self, *andTraversals: "GraphTraversal") -> "GraphTraversal":
         pass
 
-    def as_(self, stepLabel: str, *args: str) -> "GraphTraversal":
+    def as_(self, stepLabel: str, *stepLabels: str) -> "GraphTraversal":
         pass
 
     def both(self, *args: str) -> "GraphTraversal":
@@ -214,17 +214,17 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         )
         return self
 
-    def aggregate(self, sideEffectKey: str = "") -> "DefaultGraphTraversal":
+    def aggregate(self, sideEffectKey: str) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("aggregate", [StringNode(sideEffectKey)]))
         return self
 
-    def and_(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("and", [AnyNode(v) for v in args]))
+    def and_(self, *andTraversals: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("and", [AnyNode(v) for v in andTraversals]))
         return self
 
-    def as_(self, stepLabel: str, *args: str) -> "DefaultGraphTraversal":
+    def as_(self, stepLabel: str, *stepLabels: str) -> "DefaultGraphTraversal":
         self.nodes.append(
-            MethodCallNode("as", [StringNode(v) for v in (stepLabel, *args)])
+            MethodCallNode("as", [StringNode(v) for v in (stepLabel, *stepLabels)])
         )
         return self
 
