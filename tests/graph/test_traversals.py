@@ -143,7 +143,7 @@ class TestDefaultGraphTraversal:
     @pytest.mark.parametrize(
         "test_args,expected",
         [
-            ([], 'g.V().asAdmin()'),
+            ([], "g.V().asAdmin()"),
         ],
     )
     def test_asAdmin(self, test_args: typing.List[str], expected: str) -> None:
