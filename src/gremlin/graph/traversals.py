@@ -51,6 +51,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def as_(self, stepLabel: str, *stepLabels: str) -> "GraphTraversal":
         pass
 
+    def asAdmin(self) -> "GraphTraversal":
+        pass
+
     def both(self, *args: str) -> "GraphTraversal":
         pass
 
@@ -225,6 +228,15 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
     def as_(self, stepLabel: str, *stepLabels: str) -> "DefaultGraphTraversal":
         self.nodes.append(
             MethodCallNode("as", [StringNode(v) for v in (stepLabel, *stepLabels)])
+        )
+        return self
+
+    def asAdmin(self) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "asAdmin",
+                [],
+            )
         )
         return self
 
