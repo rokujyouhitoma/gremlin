@@ -54,6 +54,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def asAdmin(self) -> "GraphTraversal":
         pass
 
+    def barrier(self) -> "GraphTraversal":
+        pass
+
     def both(self, *args: str) -> "GraphTraversal":
         pass
 
@@ -235,6 +238,15 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(
             MethodCallNode(
                 "asAdmin",
+                [],
+            )
+        )
+        return self
+
+    def barrier(self) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "barrier",
                 [],
             )
         )

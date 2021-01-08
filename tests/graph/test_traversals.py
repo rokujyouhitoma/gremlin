@@ -29,6 +29,7 @@ class TestGraphTraversal:
         g.and_(g, g)
         g.as_("")
         g.asAdmin()
+        g.barrier()
         g.both("")
         g.bothE("")
         g.bothV()
@@ -152,6 +153,21 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().asAdmin(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().barrier()"),
+        ],
+    )
+    def test_barrier(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().barrier(*test_args)
         assert node
         assert node.evaluate() == expected
 
