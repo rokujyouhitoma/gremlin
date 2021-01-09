@@ -54,7 +54,7 @@ class GraphTraversal(metaclass=ABCMeta):
     def asAdmin(self) -> "GraphTraversal":
         pass
 
-    def barrier(self) -> "GraphTraversal":
+    def barrier(self, maxBarrierSize: typing.Optional[int]) -> "GraphTraversal":
         pass
 
     def both(self, *args: str) -> "GraphTraversal":
@@ -243,11 +243,13 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         )
         return self
 
-    def barrier(self) -> "DefaultGraphTraversal":
+    def barrier(
+        self, maxBarrierSize: typing.Optional[int] = None
+    ) -> "DefaultGraphTraversal":
         self.nodes.append(
             MethodCallNode(
                 "barrier",
-                [],
+                [] if maxBarrierSize is None else [IntegerNode(maxBarrierSize)],
             )
         )
         return self

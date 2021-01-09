@@ -29,7 +29,7 @@ class TestGraphTraversal:
         g.and_(g, g)
         g.as_("")
         g.asAdmin()
-        g.barrier()
+        g.barrier(1)
         g.both("")
         g.bothE("")
         g.bothV()
@@ -160,9 +160,10 @@ class TestDefaultGraphTraversal:
         "test_args,expected",
         [
             ([], "g.V().barrier()"),
+            ([1], "g.V().barrier(1)"),
         ],
     )
-    def test_barrier(self, test_args: typing.List[str], expected: str) -> None:
+    def test_barrier(self, test_args: typing.List[int], expected: str) -> None:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
