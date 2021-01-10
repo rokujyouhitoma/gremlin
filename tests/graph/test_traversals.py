@@ -33,6 +33,7 @@ class TestGraphTraversal:
         g.both("")
         g.bothE("")
         g.bothV()
+        g.branch(g.V())
         g.by(g, g)
         g.count()
         g.drop()
@@ -218,6 +219,22 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().bothV(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            # TODO
+            ([], "g.V().branch(g.V())"),
+        ],
+    )
+    def test_branch(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().branch(g.V())
         assert node
         assert node.evaluate() == expected
 
