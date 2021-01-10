@@ -57,10 +57,10 @@ class GraphTraversal(metaclass=ABCMeta):
     def barrier(self, maxBarrierSize: typing.Optional[int]) -> "GraphTraversal":
         pass
 
-    def both(self, *args: str) -> "GraphTraversal":
+    def both(self, *edgeLabels: str) -> "GraphTraversal":
         pass
 
-    def bothE(self, *args: str) -> "GraphTraversal":
+    def bothE(self, *edgeLabels: str) -> "GraphTraversal":
         pass
 
     def bothV(self) -> "GraphTraversal":
@@ -254,20 +254,20 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         )
         return self
 
-    def both(self, *args: str) -> "DefaultGraphTraversal":
+    def both(self, *edgeLabels: str) -> "DefaultGraphTraversal":
         self.nodes.append(
             MethodCallNode(
                 "both",
-                [StringNode(v) for v in args],
+                [StringNode(v) for v in edgeLabels],
             )
         )
         return self
 
-    def bothE(self, *args: str) -> "DefaultGraphTraversal":
+    def bothE(self, *edgeLabels: str) -> "DefaultGraphTraversal":
         self.nodes.append(
             MethodCallNode(
                 "bothE",
-                [StringNode(v) for v in args],
+                [StringNode(v) for v in edgeLabels],
             )
         )
         return self
