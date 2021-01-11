@@ -70,6 +70,10 @@ class GraphTraversal(metaclass=ABCMeta):
         pass
 
     def by(self, *args: typing.Union[str, "GraphTraversal"]) -> "GraphTraversal":
+        # TODO: too many arguments variation is exist
+        pass
+
+    def cap(self, sideEffectKey: str, *sideEffectKeys: str) -> "GraphTraversal":
         pass
 
     def count(self) -> "GraphTraversal":
@@ -298,6 +302,14 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
             MethodCallNode(
                 "by",
                 [StringNode(v) if isinstance(v, str) else AnyNode(v) for v in args],
+            )
+        )
+        return self
+
+    def cap(self, sideEffectKey: str, *sideEffectKeys: str) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "cap", [StringNode(v) for v in (sideEffectKey, *sideEffectKeys)]
             )
         )
         return self
