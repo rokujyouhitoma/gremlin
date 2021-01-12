@@ -76,6 +76,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def cap(self, sideEffectKey: str, *sideEffectKeys: str) -> "GraphTraversal":
         pass
 
+    def choose(self, choiceTraversal: "GraphTraversal") -> "GraphTraversal":
+        pass
+
     def count(self) -> "GraphTraversal":
         pass
 
@@ -310,6 +313,15 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(
             MethodCallNode(
                 "cap", [StringNode(v) for v in (sideEffectKey, *sideEffectKeys)]
+            )
+        )
+        return self
+
+    def choose(self, choiceTraversal: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "choose",
+                [AnyNode(choiceTraversal)],
             )
         )
         return self
