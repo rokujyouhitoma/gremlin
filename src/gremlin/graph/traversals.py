@@ -79,6 +79,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def choose(self, choiceTraversal: "GraphTraversal") -> "GraphTraversal":
         pass
 
+    def coalesce(self, coalesceTraversals: "GraphTraversal") -> "GraphTraversal":
+        pass
+
     def count(self) -> "GraphTraversal":
         pass
 
@@ -322,6 +325,15 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
             MethodCallNode(
                 "choose",
                 [AnyNode(choiceTraversal)],
+            )
+        )
+        return self
+
+    def coalesce(self, coalesceTraversals: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "coalesce",
+                [AnyNode(coalesceTraversals)],
             )
         )
         return self
