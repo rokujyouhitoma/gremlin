@@ -38,8 +38,9 @@ class TestGraphTraversal:
         g.cap("")
         g.cap("", "")
         g.choose(g.V())
-        g.count()
         g.coalesce(g.V())
+        g.coin(0)
+        g.count()
         g.drop()
         g.elementMap("")
         g.groupCount()
@@ -276,6 +277,22 @@ class TestDefaultGraphTraversal:
         node = g.V().coalesce(g.V())
         assert node
         assert node.evaluate() == "g.V().coalesce(g.V())"
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([0], "g.V().coin(0)"),
+            ([1], "g.V().coin(1)"),
+        ],
+    )
+    def test_coin(self, test_args: typing.List[int], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().coin(*test_args)
+        assert node
+        assert node.evaluate() == expected
 
     @pytest.mark.parametrize(
         "test_args,expected",

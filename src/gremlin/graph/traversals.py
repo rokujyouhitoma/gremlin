@@ -82,6 +82,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def coalesce(self, coalesceTraversals: "GraphTraversal") -> "GraphTraversal":
         pass
 
+    def coin(self, probability: int) -> "GraphTraversal":
+        pass
+
     def count(self) -> "GraphTraversal":
         pass
 
@@ -336,6 +339,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
                 [AnyNode(coalesceTraversals)],
             )
         )
+        return self
+
+    def coin(self, probability: int) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("coin", [IntegerNode(probability)]))
         return self
 
     def count(self) -> "DefaultGraphTraversal":
