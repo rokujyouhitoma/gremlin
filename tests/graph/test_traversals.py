@@ -40,6 +40,7 @@ class TestGraphTraversal:
         g.choose(g.V())
         g.coalesce(g.V())
         g.coin(0)
+        g.connectedComponent()
         g.count()
         g.drop()
         g.elementMap("")
@@ -293,6 +294,15 @@ class TestDefaultGraphTraversal:
         node = g.V().coin(*test_args)
         assert node
         assert node.evaluate() == expected
+
+    def test_connectedComponent(self) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().connectedComponent()
+        assert node
+        assert node.evaluate() == "g.V().connectedComponent()"
 
     @pytest.mark.parametrize(
         "test_args,expected",
