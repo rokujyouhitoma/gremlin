@@ -42,6 +42,7 @@ class TestGraphTraversal:
         g.coin(0)
         g.connectedComponent()
         g.count()
+        g.cyclicPath()
         g.drop()
         g.elementMap("")
         g.groupCount()
@@ -303,6 +304,15 @@ class TestDefaultGraphTraversal:
         node = g.V().connectedComponent()
         assert node
         assert node.evaluate() == "g.V().connectedComponent()"
+
+    def test_cyclicPath(self) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().cyclicPath()
+        assert node
+        assert node.evaluate() == "g.V().cyclicPath()"
 
     @pytest.mark.parametrize(
         "test_args,expected",

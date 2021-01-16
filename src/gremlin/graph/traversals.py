@@ -91,6 +91,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def count(self) -> "GraphTraversal":
         pass
 
+    def cyclicPath(self) -> "GraphTraversal":
+        pass
+
     def drop(self) -> "GraphTraversal":
         pass
 
@@ -354,6 +357,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def count(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("count", []))
+        return self
+
+    def cyclicPath(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("cyclicPath", []))
         return self
 
     def drop(self) -> "DefaultGraphTraversal":
