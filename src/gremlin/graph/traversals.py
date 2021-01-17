@@ -94,6 +94,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def cyclicPath(self) -> "GraphTraversal":
         pass
 
+    def dedup(self, *dedupLabels: str) -> "GraphTraversal":
+        pass
+
     def drop(self) -> "GraphTraversal":
         pass
 
@@ -361,6 +364,15 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def cyclicPath(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("cyclicPath", []))
+        return self
+
+    def dedup(self, *dedupLabels: str) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "dedup",
+                [StringNode(v) for v in dedupLabels],
+            )
+        )
         return self
 
     def drop(self) -> "DefaultGraphTraversal":

@@ -43,6 +43,8 @@ class TestGraphTraversal:
         g.connectedComponent()
         g.count()
         g.cyclicPath()
+        g.dedup("")
+        g.dedup("", "")
         g.drop()
         g.elementMap("")
         g.groupCount()
@@ -313,6 +315,22 @@ class TestDefaultGraphTraversal:
         node = g.V().cyclicPath()
         assert node
         assert node.evaluate() == "g.V().cyclicPath()"
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            (["arg"], 'g.V().dedup("arg")'),
+            (["arg1", "arg2"], 'g.V().dedup("arg1","arg2")'),
+        ],
+    )
+    def test_dedup(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().dedup(*test_args)
+        assert node
+        assert node.evaluate() == expected
 
     @pytest.mark.parametrize(
         "test_args,expected",
