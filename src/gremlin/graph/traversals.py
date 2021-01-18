@@ -182,7 +182,11 @@ class GraphTraversal(metaclass=ABCMeta):
     def path(self) -> "GraphTraversal":
         pass
 
-    def repeat(self, *args: "GraphTraversal") -> "GraphTraversal":
+    def repeat(
+        self,
+        loopName: typing.Union[str, "GraphTraversal"],
+        repeatTraversal: typing.Optional["GraphTraversal"],
+    ) -> "GraphTraversal":
         pass
 
     def select(self, selectKey: str) -> "GraphTraversal":
@@ -506,8 +510,19 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("path", []))
         return self
 
-    def repeat(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("repeat", [AnyNode(v) for v in args]))
+    def repeat(
+        self,
+        loopName: typing.Union[str, "GraphTraversal"],
+        repeatTraversal: typing.Optional["GraphTraversal"] = None,
+    ) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "repeat",
+                [StringNode(typing.cast(str, loopName)), AnyNode(repeatTraversal)]
+                if repeatTraversal is not None
+                else [AnyNode(loopName)],
+            )
+        )
         return self
 
     def select(self, selectKey: str) -> "DefaultGraphTraversal":
