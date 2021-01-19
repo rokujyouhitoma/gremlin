@@ -103,6 +103,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def elementMap(self, *propertyKeys: str) -> "GraphTraversal":
         pass
 
+    def emit(self) -> "GraphTraversal":
+        pass
+
     def groupCount(self) -> "GraphTraversal":
         pass
 
@@ -390,6 +393,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
                 [StringNode(v) for v in propertyKeys],
             )
         )
+        return self
+
+    def emit(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("emit", []))
         return self
 
     def groupCount(self) -> "DefaultGraphTraversal":
