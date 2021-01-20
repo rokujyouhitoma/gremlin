@@ -106,6 +106,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def emit(self) -> "GraphTraversal":
         pass
 
+    def filter(self, filterTraversal: "GraphTraversal") -> "GraphTraversal":
+        pass
+
     def groupCount(self) -> "GraphTraversal":
         pass
 
@@ -397,6 +400,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def emit(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("emit", []))
+        return self
+
+    def filter(self, filterTraversal: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("filter", [AnyNode(filterTraversal)]))
         return self
 
     def groupCount(self) -> "DefaultGraphTraversal":

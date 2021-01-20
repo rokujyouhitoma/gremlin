@@ -48,6 +48,7 @@ class TestGraphTraversal:
         g.drop()
         g.elementMap("")
         g.emit()
+        g.filter(g.V())
         g.groupCount()
         g.has("key", "value")
         g.hasLabel("")
@@ -373,6 +374,15 @@ class TestDefaultGraphTraversal:
         node = g.V().emit()
         assert node
         assert node.evaluate() == "g.V().emit()"
+
+    def test_filter(self) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().filter(g.V())
+        assert node
+        assert node.evaluate() == "g.V().filter(g.V())"
 
     @pytest.mark.parametrize(
         "test_args,expected",
