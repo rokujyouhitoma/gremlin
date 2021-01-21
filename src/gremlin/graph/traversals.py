@@ -109,6 +109,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def filter(self, filterTraversal: "GraphTraversal") -> "GraphTraversal":
         pass
 
+    def flatMap(self, flatMapTraversal: "GraphTraversal") -> "GraphTraversal":
+        pass
+
     def groupCount(self) -> "GraphTraversal":
         pass
 
@@ -404,6 +407,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def filter(self, filterTraversal: "GraphTraversal") -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("filter", [AnyNode(filterTraversal)]))
+        return self
+
+    def flatMap(self, flatMapTraversal: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("flatMap", [AnyNode(flatMapTraversal)]))
         return self
 
     def groupCount(self) -> "DefaultGraphTraversal":

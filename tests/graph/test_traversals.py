@@ -49,6 +49,7 @@ class TestGraphTraversal:
         g.elementMap("")
         g.emit()
         g.filter(g.V())
+        g.flatMap(g.V())
         g.groupCount()
         g.has("key", "value")
         g.hasLabel("")
@@ -383,6 +384,15 @@ class TestDefaultGraphTraversal:
         node = g.V().filter(g.V())
         assert node
         assert node.evaluate() == "g.V().filter(g.V())"
+
+    def test_flatMap(self) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().flatMap(g.V())
+        assert node
+        assert node.evaluate() == "g.V().flatMap(g.V())"
 
     @pytest.mark.parametrize(
         "test_args,expected",
