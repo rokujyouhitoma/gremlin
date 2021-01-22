@@ -50,6 +50,7 @@ class TestGraphTraversal:
         g.emit()
         g.filter(g.V())
         g.flatMap(g.V())
+        g.fold()
         g.groupCount()
         g.has("key", "value")
         g.hasLabel("")
@@ -393,6 +394,15 @@ class TestDefaultGraphTraversal:
         node = g.V().flatMap(g.V())
         assert node
         assert node.evaluate() == "g.V().flatMap(g.V())"
+
+    def test_fold(self) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().fold()
+        assert node
+        assert node.evaluate() == "g.V().fold()"
 
     @pytest.mark.parametrize(
         "test_args,expected",
