@@ -51,6 +51,7 @@ class TestGraphTraversal:
         g.filter(g.V())
         g.flatMap(g.V())
         g.fold()
+        g.from_("")
         g.groupCount()
         g.has("key", "value")
         g.hasLabel("")
@@ -407,11 +408,26 @@ class TestDefaultGraphTraversal:
     @pytest.mark.parametrize(
         "test_args,expected",
         [
+            (["arg"], 'g.V().from("arg")'),
+        ],
+    )
+    def test_hasLabel(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().from_(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
             (["arg"], 'g.V().hasLabel("arg")'),
             (["arg1", "arg2"], 'g.V().hasLabel("arg1","arg2")'),
         ],
     )
-    def test_hasLabel(self, test_args: typing.List[str], expected: str) -> None:
+    def test_from_(self, test_args: typing.List[str], expected: str) -> None:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
