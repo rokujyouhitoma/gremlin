@@ -118,6 +118,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def from_(self, fromStepLabel: str) -> "GraphTraversal":
         pass
 
+    def group(self) -> "GraphTraversal":
+        pass
+
     def groupCount(self) -> "GraphTraversal":
         pass
 
@@ -419,12 +422,16 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("flatMap", [AnyNode(flatMapTraversal)]))
         return self
 
+    def fold(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("fold", []))
+        return self
+
     def from_(self, fromStepLabel: str) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("from", [StringNode(fromStepLabel)]))
         return self
 
-    def fold(self) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("fold", []))
+    def group(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("group", []))
         return self
 
     def groupCount(self) -> "DefaultGraphTraversal":
