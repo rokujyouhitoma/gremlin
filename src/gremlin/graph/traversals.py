@@ -121,7 +121,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def group(self) -> "GraphTraversal":
         pass
 
-    def groupCount(self) -> "GraphTraversal":
+    def groupCount(
+        self, sideEffectKey: typing.Optional[str] = None
+    ) -> "GraphTraversal":
         pass
 
     def has(self, propertyKey: str, value: typing.Any) -> "GraphTraversal":
@@ -434,8 +436,15 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("group", []))
         return self
 
-    def groupCount(self) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("groupCount", []))
+    def groupCount(
+        self, sideEffectKey: typing.Optional[str] = None
+    ) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "groupCount",
+                [] if sideEffectKey is None else [StringNode(sideEffectKey)],
+            )
+        )
         return self
 
     def has(self, propertyKey: str, value: typing.Any) -> "DefaultGraphTraversal":
