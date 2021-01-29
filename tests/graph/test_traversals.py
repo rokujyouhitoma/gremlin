@@ -60,6 +60,7 @@ class TestGraphTraversal:
         g.hasKey("", "")
         g.hasLabel("")
         g.hasNot("")
+        g.hasValue("", "")
         g.id()
         g.in_("")
         g.index()
@@ -470,6 +471,22 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().hasNot(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            (["arg"], 'g.V().hasValue("arg")'),
+            (["arg1", "arg2"], 'g.V().hasValue("arg1","arg2")'),
+        ],
+    )
+    def test_hasValue(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().hasValue(*test_args)
         assert node
         assert node.evaluate() == expected
 

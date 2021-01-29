@@ -141,6 +141,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def hasNot(self, propertyKey: str) -> "GraphTraversal":
         pass
 
+    def hasValue(self, value: str, *otherValues: str) -> "GraphTraversal":
+        pass
+
     def id(self) -> "GraphTraversal":
         pass
 
@@ -482,6 +485,12 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def hasNot(self, propertyKey: str) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("hasNot", [StringNode(propertyKey)]))
+        return self
+
+    def hasValue(self, value: str, *otherValues: str) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode("hasValue", [StringNode(v) for v in (value, *otherValues)])
+        )
         return self
 
     def id(self) -> "DefaultGraphTraversal":
