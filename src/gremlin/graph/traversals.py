@@ -147,6 +147,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def id(self) -> "GraphTraversal":
         pass
 
+    def identity(self) -> "GraphTraversal":
+        pass
+
     def index(self) -> "GraphTraversal":
         pass
 
@@ -495,6 +498,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def id(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("id", []))
+        return self
+
+    def identity(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("identity", []))
         return self
 
     def in_(self, edgeLabel: str) -> "DefaultGraphTraversal":
