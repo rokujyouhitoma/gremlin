@@ -177,6 +177,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def limit(self, limit: int) -> "GraphTraversal":
         pass
 
+    def local(self, localTraversal: "GraphTraversal") -> "GraphTraversal":
+        pass
+
     def match(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
@@ -538,6 +541,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def limit(self, limit: int) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("limit", [IntegerNode(limit)]))
+        return self
+
+    def local(self, localTraversal: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("local", [AnyNode(localTraversal)]))
         return self
 
     def match(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
