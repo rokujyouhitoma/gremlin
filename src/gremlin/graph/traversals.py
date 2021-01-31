@@ -150,6 +150,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def identity(self) -> "GraphTraversal":
         pass
 
+    def in_(self, *edgeLabels: str) -> "GraphTraversal":
+        pass
+
     def index(self) -> "GraphTraversal":
         pass
 
@@ -157,9 +160,6 @@ class GraphTraversal(metaclass=ABCMeta):
         pass
 
     def inV(self) -> "GraphTraversal":
-        pass
-
-    def in_(self, edgeLabel: str) -> "GraphTraversal":
         pass
 
     def is_(self, value: typing.Any) -> "GraphTraversal":
@@ -504,8 +504,8 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("identity", []))
         return self
 
-    def in_(self, edgeLabel: str) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("in", [StringNode(edgeLabel)]))
+    def in_(self, *edgeLabels: str) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("in", [StringNode(v) for v in edgeLabels]))
         return self
 
     def index(self) -> "DefaultGraphTraversal":

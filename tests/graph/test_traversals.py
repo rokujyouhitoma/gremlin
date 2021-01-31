@@ -64,6 +64,7 @@ class TestGraphTraversal:
         g.id()
         g.identity()
         g.in_("")
+        g.in_("", "")
         g.index()
         g.inE("")
         g.inV()
@@ -558,6 +559,22 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().identity(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            (["arg"], 'g.V().in("arg")'),
+            (["arg1", "arg2"], 'g.V().in("arg1","arg2")'),
+        ],
+    )
+    def test_in_(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().in_(*test_args)
         assert node
         assert node.evaluate() == expected
 
