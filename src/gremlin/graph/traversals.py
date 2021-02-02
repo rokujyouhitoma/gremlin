@@ -180,6 +180,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def local(self, localTraversal: "GraphTraversal") -> "GraphTraversal":
         pass
 
+    def loops(self) -> "GraphTraversal":
+        pass
+
     def match(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
@@ -545,6 +548,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def local(self, localTraversal: "GraphTraversal") -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("local", [AnyNode(localTraversal)]))
+        return self
+
+    def loops(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("loops", []))
         return self
 
     def match(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
