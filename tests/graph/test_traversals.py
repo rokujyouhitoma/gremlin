@@ -75,6 +75,7 @@ class TestGraphTraversal:
         g.limit(0)
         g.local(g.V())
         g.loops()
+        g.loops("")
         g.match(g, g)
         g.max()
         g.mean()
@@ -685,6 +686,7 @@ class TestDefaultGraphTraversal:
         "test_args,expected",
         [
             ([], "g.V().loops()"),
+            (["arg"], 'g.V().loops("arg")'),
         ],
     )
     def test_loops(self, test_args: typing.List[str], expected: str) -> None:
