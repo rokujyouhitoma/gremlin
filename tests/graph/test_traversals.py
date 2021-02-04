@@ -76,6 +76,7 @@ class TestGraphTraversal:
         g.local(g.V())
         g.loops()
         g.loops("")
+        g.map(g.V())
         g.match(g, g)
         g.max()
         g.mean()
@@ -697,6 +698,15 @@ class TestDefaultGraphTraversal:
         node = g.V().loops(*test_args)
         assert node
         assert node.evaluate() == expected
+
+    def test_map(self) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().map(g.V())
+        assert node
+        assert node.evaluate() == "g.V().map(g.V())"
 
     @pytest.mark.parametrize(
         "test_args,expected",

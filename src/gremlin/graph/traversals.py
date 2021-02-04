@@ -183,6 +183,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def loops(self, loopName: typing.Optional[str] = None) -> "GraphTraversal":
         pass
 
+    def map(self, mapTraversal: "GraphTraversal") -> "GraphTraversal":
+        pass
+
     def match(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
@@ -557,6 +560,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
                 [] if loopName is None else [StringNode(loopName)],
             )
         )
+        return self
+
+    def map(self, mapTraversal: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("map", [AnyNode(mapTraversal)]))
         return self
 
     def match(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
