@@ -201,6 +201,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def min(self) -> "GraphTraversal":
         pass
 
+    def none(self) -> "GraphTraversal":
+        pass
+
     def not_(self, notTraversal: "GraphTraversal") -> "GraphTraversal":
         pass
 
@@ -589,14 +592,14 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("min", []))
         return self
 
+    def none(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("none", []))
+        return self
+
     def next(self, amount: int = 0) -> List:
         args = [] if amount == 0 else [IntegerNode(amount)]
         self.nodes.append(MethodCallNode("next", args))
         return List(self.nodes)
-
-    def none(self) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("none", []))
-        return self
 
     def not_(self, notTraversal: "GraphTraversal") -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("not", [AnyNode(notTraversal)]))
