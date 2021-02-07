@@ -84,6 +84,7 @@ class TestGraphTraversal:
         g.min()
         g.none()
         g.not_(g.V())
+        g.option(g.V())
         g.or_(g.V())
         g.order(g)
         g.otherV()
@@ -809,6 +810,15 @@ class TestDefaultGraphTraversal:
         node = g.V().not_(g.V())
         assert node
         assert node.evaluate() == "g.V().not(g.V())"
+
+    def test_option(self) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().option(g.V())
+        assert node
+        assert node.evaluate() == "g.V().option(g.V())"
 
     def test_or_(self) -> None:
         from gremlin.graph import DefaultGraphTraversal

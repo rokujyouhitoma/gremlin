@@ -207,6 +207,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def not_(self, notTraversal: "GraphTraversal") -> "GraphTraversal":
         pass
 
+    def option(self, traversalOption: "GraphTraversal") -> "GraphTraversal":
+        pass
+
     def or_(self, orTraversals: "GraphTraversal") -> "GraphTraversal":
         pass
 
@@ -603,6 +606,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def not_(self, notTraversal: "GraphTraversal") -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("not", [AnyNode(notTraversal)]))
+        return self
+
+    def option(self, traversalOption: "GraphTraversal") -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("option", [AnyNode(traversalOption)]))
         return self
 
     def or_(self, orTraversals: "GraphTraversal") -> "DefaultGraphTraversal":
