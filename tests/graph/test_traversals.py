@@ -93,6 +93,7 @@ class TestGraphTraversal:
         g.outV()
         g.pageRank()
         g.path()
+        g.peerPressure()
         g.repeat(g, g)
         g.select("")
         g.until(g, g)
@@ -890,6 +891,21 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().outV(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().peerPressure()"),
+        ],
+    )
+    def test_peerPressure(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().peerPressure(*test_args)
         assert node
         assert node.evaluate() == expected
 

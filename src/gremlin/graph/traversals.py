@@ -235,6 +235,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def path(self) -> "GraphTraversal":
         pass
 
+    def peerPressure(self) -> "GraphTraversal":
+        pass
+
     def repeat(
         self,
         loopName: typing.Union[str, "GraphTraversal"],
@@ -643,6 +646,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def path(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("path", []))
+        return self
+
+    def peerPressure(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("peerPressure", []))
         return self
 
     def repeat(
