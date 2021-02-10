@@ -95,6 +95,8 @@ class TestGraphTraversal:
         g.path()
         g.peerPressure()
         g.profile()
+        g.project("")
+        g.project("", "")
         g.repeat(g, g)
         g.select("")
         g.until(g, g)
@@ -922,6 +924,22 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().profile(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            (["arg"], 'g.V().project("arg")'),
+            (["arg1", "arg2"], 'g.V().project("arg1","arg2")'),
+        ],
+    )
+    def test_project(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().project(*test_args)
         assert node
         assert node.evaluate() == expected
 

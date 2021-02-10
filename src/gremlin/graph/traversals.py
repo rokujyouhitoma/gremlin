@@ -241,6 +241,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def profile(self) -> "GraphTraversal":
         pass
 
+    def project(self, projectKey: str, *otherProjectKeys: str) -> "GraphTraversal":
+        pass
+
     def repeat(
         self,
         loopName: typing.Union[str, "GraphTraversal"],
@@ -657,6 +660,16 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def profile(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("profile", []))
+        return self
+
+    def project(
+        self, projectKey: str, *otherProjectKeys: str
+    ) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "project", [StringNode(v) for v in (projectKey, *otherProjectKeys)]
+            )
+        )
         return self
 
     def repeat(
