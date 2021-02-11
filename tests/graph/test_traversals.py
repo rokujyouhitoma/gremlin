@@ -98,6 +98,7 @@ class TestGraphTraversal:
         g.project("")
         g.project("", "")
         g.repeat(g, g)
+        g.sack()
         g.select("")
         g.until(g, g)
         g.V()
@@ -940,6 +941,21 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().project(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().sack()"),
+        ],
+    )
+    def test_sack(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().sack(*test_args)
         assert node
         assert node.evaluate() == expected
 
