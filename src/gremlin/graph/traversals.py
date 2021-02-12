@@ -254,6 +254,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def sack(self) -> "GraphTraversal":
         pass
 
+    def sample(self, amountToSample: int) -> "GraphTraversal":
+        pass
+
     def select(self, selectKey: str) -> "GraphTraversal":
         pass
 
@@ -692,6 +695,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def sack(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("sack", []))
+        return self
+
+    def sample(self, amountToSample: int) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("sample", [IntegerNode(amountToSample)]))
         return self
 
     def select(self, selectKey: str) -> "DefaultGraphTraversal":
