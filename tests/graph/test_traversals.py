@@ -101,6 +101,7 @@ class TestGraphTraversal:
         g.sack()
         g.select("")
         g.sample(1)
+        g.shortestPath()
         g.until(g, g)
         g.V()
         g.value()
@@ -972,6 +973,21 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().sample(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().shortestPath()"),
+        ],
+    )
+    def test_shortestPath(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().shortestPath(*test_args)
         assert node
         assert node.evaluate() == expected
 
