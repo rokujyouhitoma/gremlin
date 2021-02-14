@@ -263,6 +263,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def shortestPath(self) -> "GraphTraversal":
         pass
 
+    def simplePath(self) -> "GraphTraversal":
+        pass
+
     def until(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
@@ -710,6 +713,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def shortestPath(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("shortestPath", []))
+        return self
+
+    def simplePath(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("simplePath", []))
         return self
 
     def toList(self) -> "DefaultGraphTraversal":
