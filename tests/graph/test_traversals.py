@@ -104,6 +104,7 @@ class TestGraphTraversal:
         g.shortestPath()
         g.simplePath()
         g.skip(1)
+        g.subgraph("")
         g.until(g, g)
         g.V()
         g.value()
@@ -1020,6 +1021,21 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().skip(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            (["arg1"], 'g.V().subgraph("arg1")'),
+        ],
+    )
+    def test_subgraph(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().subgraph(*test_args)
         assert node
         assert node.evaluate() == expected
 

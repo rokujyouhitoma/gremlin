@@ -730,7 +730,7 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         return self
 
     def subgraph(self, sideEffectKey: str) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("sideEffectKey", [StringNode(sideEffectKey)]))
+        self.nodes.append(MethodCallNode("subgraph", [StringNode(sideEffectKey)]))
         return self
 
     def toList(self) -> "DefaultGraphTraversal":
