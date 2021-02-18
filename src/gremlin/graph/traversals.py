@@ -272,6 +272,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def subgraph(self, sideEffectKey: str) -> "GraphTraversal":
         pass
 
+    def sum(self) -> "GraphTraversal":
+        pass
+
     def until(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
@@ -731,6 +734,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def subgraph(self, sideEffectKey: str) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("subgraph", [StringNode(sideEffectKey)]))
+        return self
+
+    def sum(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("sum", []))
         return self
 
     def toList(self) -> "DefaultGraphTraversal":
