@@ -278,6 +278,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def tail(self) -> "GraphTraversal":
         pass
 
+    def timeLimit(self, timeLimit: int) -> "GraphTraversal":
+        pass
+
     def until(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
@@ -745,6 +748,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def tail(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("tail", []))
+        return self
+
+    def timeLimit(self, timeLimit: int) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("timeLimit", [IntegerNode(timeLimit)]))
         return self
 
     def toList(self) -> "DefaultGraphTraversal":
