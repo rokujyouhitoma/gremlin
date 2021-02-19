@@ -275,6 +275,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def sum(self) -> "GraphTraversal":
         pass
 
+    def tail(self) -> "GraphTraversal":
+        pass
+
     def until(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
@@ -738,6 +741,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def sum(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("sum", []))
+        return self
+
+    def tail(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("tail", []))
         return self
 
     def toList(self) -> "DefaultGraphTraversal":
