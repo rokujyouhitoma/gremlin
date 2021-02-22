@@ -284,6 +284,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def times(self, maxLoops: int) -> "GraphTraversal":
         pass
 
+    def to(self, toStepLabel: str) -> "GraphTraversal":
+        pass
+
     def until(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
@@ -759,6 +762,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def times(self, maxLoops: int) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("times", [IntegerNode(maxLoops)]))
+        return self
+
+    def to(self, toStepLabel: str) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("to", [StringNode(toStepLabel)]))
         return self
 
     def toList(self) -> "DefaultGraphTraversal":
