@@ -287,6 +287,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def to(self, toStepLabel: str) -> "GraphTraversal":
         pass
 
+    def tree(self) -> "GraphTraversal":
+        pass
+
     def until(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
@@ -766,6 +769,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def to(self, toStepLabel: str) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("to", [StringNode(toStepLabel)]))
+        return self
+
+    def tree(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("tree", []))
         return self
 
     def toList(self) -> "DefaultGraphTraversal":
