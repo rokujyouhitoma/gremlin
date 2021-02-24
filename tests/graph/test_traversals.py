@@ -111,6 +111,7 @@ class TestGraphTraversal:
         g.times(1)
         g.to("")
         g.tree()
+        g.tree("")
         g.until(g, g)
         g.V()
         g.value()
@@ -1157,6 +1158,7 @@ class TestDefaultGraphTraversal:
         "test_args,expected",
         [
             ([], "g.V().tree()"),
+            (["arg"], 'g.V().tree("arg")'),
         ],
     )
     def test_tree(self, test_args: typing.List[str], expected: str) -> None:
