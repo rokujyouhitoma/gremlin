@@ -113,6 +113,7 @@ class TestGraphTraversal:
         g.tree()
         g.tree("")
         g.until(g, g)
+        g.unfold()
         g.V()
         g.value()
         g.valueMap("")
@@ -1167,6 +1168,21 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().tree(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            ([], "g.V().unfold()"),
+        ],
+    )
+    def test_unfold(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().unfold(*test_args)
         assert node
         assert node.evaluate() == expected
 

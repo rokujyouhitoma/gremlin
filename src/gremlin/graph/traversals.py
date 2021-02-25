@@ -293,6 +293,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def until(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
+    def unfold(self) -> "GraphTraversal":
+        pass
+
     def V(self) -> "GraphTraversal":
         pass
 
@@ -792,6 +795,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def until(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("until", [AnyNode(v) for v in args]))
+        return self
+
+    def unfold(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("unfold", []))
         return self
 
     def V(self) -> "DefaultGraphTraversal":
