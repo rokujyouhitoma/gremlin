@@ -311,6 +311,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def where(self, whereTraversal: "GraphTraversal") -> "GraphTraversal":
         pass
 
+    def with_(self, key: str) -> "GraphTraversal":
+        pass
+
 
 @dataclass
 class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
@@ -824,4 +827,8 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def where(self, whereTraversal: "GraphTraversal") -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("where", [AnyNode(whereTraversal)]))
+        return self
+
+    def with_(self, key: str) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("with", [StringNode(key)]))
         return self

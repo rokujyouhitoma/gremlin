@@ -119,6 +119,7 @@ class TestGraphTraversal:
         g.valueMap("")
         g.values("")
         g.where(g)
+        g.with_("")
 
 
 class TestDefaultGraphTraversal:
@@ -1228,6 +1229,21 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().values(*test_args)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
+        "test_args,expected",
+        [
+            (["arg"], 'g.V().with("arg")'),
+        ],
+    )
+    def test_with_(self, test_args: typing.List[str], expected: str) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = g.V().with_(*test_args)
         assert node
         assert node.evaluate() == expected
 
