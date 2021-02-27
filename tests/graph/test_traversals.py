@@ -161,7 +161,7 @@ class TestDefaultGraphTraversal:
         assert node
         assert node.evaluate() == expected
 
-    def test_add_(self) -> None:
+    def test_and_(self) -> None:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
