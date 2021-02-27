@@ -314,6 +314,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def with_(self, key: str) -> "GraphTraversal":
         pass
 
+    def write(self) -> "GraphTraversal":
+        pass
+
 
 @dataclass
 class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
@@ -831,4 +834,8 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def with_(self, key: str) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("with", [StringNode(key)]))
+        return self
+
+    def write(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("write", []))
         return self
