@@ -152,6 +152,12 @@ class TestDefaultGraphTraversal:
             ("and_", [], "g.V().and()"),
             ("as_", ["arg1"], 'g.V().as("arg1")'),
             ("as_", ["arg1", "arg2"], 'g.V().as("arg1","arg2")'),
+            ("asAdmin", [], "g.V().asAdmin()"),
+            ("barrier", [], "g.V().barrier()"),
+            ("barrier", [1], "g.V().barrier(1)"),
+            ("both", [], "g.V().both()"),
+            ("both", ["arg1"], 'g.V().both("arg1")'),
+            ("both", ["arg1", "arg2"], 'g.V().both("arg1","arg2")'),
         ],
     )
     def test_V_methods(
@@ -177,54 +183,6 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = getattr(g, method)(g.V())
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([], "g.V().asAdmin()"),
-        ],
-    )
-    def test_asAdmin(self, test_args: typing.List[str], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().asAdmin(*test_args)
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([], "g.V().barrier()"),
-            ([1], "g.V().barrier(1)"),
-        ],
-    )
-    def test_barrier(self, test_args: typing.List[int], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().barrier(*test_args)
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_labels,expected",
-        [
-            ([], "g.V().both()"),
-            (["arg1"], 'g.V().both("arg1")'),
-            (["arg1", "arg2"], 'g.V().both("arg1","arg2")'),
-        ],
-    )
-    def test_both(self, test_labels: typing.List[str], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().both(*test_labels)
         assert node
         assert node.evaluate() == expected
 
