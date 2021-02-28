@@ -147,6 +147,23 @@ class TestDefaultGraphTraversal:
         assert node.evaluate() == expected
 
     @pytest.mark.parametrize(
+        "method,test_labels,expected",
+        [
+            ("and_", [], "g.V().and()"),
+        ],
+    )
+    def test_V_methods(
+        self, method: str, test_labels: typing.List[str], expected: str
+    ) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = getattr(g.V(), method)(*test_labels)
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
         "method,expected",
         [
             ("addE", "g.addE(g.V())"),
@@ -160,15 +177,6 @@ class TestDefaultGraphTraversal:
         node = getattr(g, method)(g.V())
         assert node
         assert node.evaluate() == expected
-
-    def test_and_(self) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().and_()
-        assert node
-        assert node.evaluate() == "g.V().and()"
 
     @pytest.mark.parametrize(
         "test_labels,expected",
