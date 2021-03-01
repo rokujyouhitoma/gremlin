@@ -158,6 +158,9 @@ class TestDefaultGraphTraversal:
             ("both", [], "g.V().both()"),
             ("both", ["arg1"], 'g.V().both("arg1")'),
             ("both", ["arg1", "arg2"], 'g.V().both("arg1","arg2")'),
+            ("bothE", [], "g.V().bothE()"),
+            ("bothE", ["arg1"], 'g.V().bothE("arg1")'),
+            ("bothE", ["arg1", "arg2"], 'g.V().bothE("arg1","arg2")'),
         ],
     )
     def test_V_methods(
@@ -183,23 +186,6 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = getattr(g, method)(g.V())
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_labels,expected",
-        [
-            ([], "g.V().bothE()"),
-            (["arg1"], 'g.V().bothE("arg1")'),
-            (["arg1", "arg2"], 'g.V().bothE("arg1","arg2")'),
-        ],
-    )
-    def test_bothE(self, test_labels: typing.List[str], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().bothE(*test_labels)
         assert node
         assert node.evaluate() == expected
 
