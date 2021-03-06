@@ -167,6 +167,7 @@ class TestDefaultGraphTraversal:
             ("cap", ["arg1", "arg2"], 'g.V().cap("arg1","arg2")'),
             ("coin", [0], "g.V().coin(0)"),
             ("coin", [1], "g.V().coin(1)"),
+            ("connectedComponent", [], "g.V().connectedComponent()"),
         ],
     )
     def test_V_methods(
@@ -211,15 +212,6 @@ class TestDefaultGraphTraversal:
         node = getattr(g.V(), method)(g.V())
         assert node
         assert node.evaluate() == expected
-
-    def test_connectedComponent(self) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().connectedComponent()
-        assert node
-        assert node.evaluate() == "g.V().connectedComponent()"
 
     def test_cyclicPath(self) -> None:
         from gremlin.graph import DefaultGraphTraversal
