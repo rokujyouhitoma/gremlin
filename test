@@ -1,0 +1,43 @@
+
+Field​
+
+Type​
+
+Required​
+
+Country​
+
+Select List​
+
+Yes​
+
+First Name​
+
+String​
+
+Yes​
+
+Last Name​
+
+String​
+
+Yes​
+
+Registration Code​
+
+String​
+
+N/A​
+
+Mobile Money Type​
+
+Select List​
+
+No​
+
+Phone Number​
+
+Number​
+
+Yes​
+
