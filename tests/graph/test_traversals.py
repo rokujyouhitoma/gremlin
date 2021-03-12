@@ -211,6 +211,7 @@ class TestDefaultGraphTraversal:
             ("choose", "g.V().choose(g.V())"),
             ("coalesce", "g.V().coalesce(g.V())"),
             ("filter", "g.V().filter(g.V())"),
+            ("flatMap", "g.V().flatMap(g.V())"),
         ],
     )
     def test_V_methods2(self, method: str, expected: str) -> None:
@@ -221,15 +222,6 @@ class TestDefaultGraphTraversal:
         node = getattr(g.V(), method)(g.V())
         assert node
         assert node.evaluate() == expected
-
-    def test_flatMap(self) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().flatMap(g.V())
-        assert node
-        assert node.evaluate() == "g.V().flatMap(g.V())"
 
     def test_fold(self) -> None:
         from gremlin.graph import DefaultGraphTraversal
