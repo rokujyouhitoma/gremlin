@@ -189,6 +189,7 @@ class TestDefaultGraphTraversal:
             ("groupCount", [], "g.V().groupCount()"),
             ("groupCount", ["arg"], 'g.V().groupCount("arg")'),
             ("group", [], "g.V().group()"),
+            ("id", [], "g.V().id()"),
         ],
     )
     def test_V_methods(
@@ -248,21 +249,6 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().from_(*test_args)
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([], "g.V().id()"),
-        ],
-    )
-    def test_id(self, test_args: typing.List[str], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().id(*test_args)
         assert node
         assert node.evaluate() == expected
 
