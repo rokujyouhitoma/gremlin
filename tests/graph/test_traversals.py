@@ -241,6 +241,7 @@ class TestDefaultGraphTraversal:
             ("filter", "g.V().filter(g.V())"),
             ("flatMap", "g.V().flatMap(g.V())"),
             ("local", "g.V().local(g.V())"),
+            ("map", "g.V().map(g.V())"),
         ],
     )
     def test_V_methods2(self, method: str, expected: str) -> None:
@@ -251,15 +252,6 @@ class TestDefaultGraphTraversal:
         node = getattr(g.V(), method)(g.V())
         assert node
         assert node.evaluate() == expected
-
-    def test_map(self) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().map(g.V())
-        assert node
-        assert node.evaluate() == "g.V().map(g.V())"
 
     @pytest.mark.parametrize(
         "test_args,expected",
