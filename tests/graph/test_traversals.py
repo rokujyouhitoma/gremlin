@@ -204,6 +204,7 @@ class TestDefaultGraphTraversal:
             ("label", [], "g.V().label()"),
             ("loops", [], "g.V().loops()"),
             ("loops", ["arg"], 'g.V().loops("arg")'),
+            ("max", [], "g.V().max()"),
         ],
     )
     def test_V_methods(
@@ -250,21 +251,6 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = getattr(g.V(), method)(g.V())
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([], "g.V().max()"),
-        ],
-    )
-    def test_max(self, test_args: typing.List[str], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().max(*test_args)
         assert node
         assert node.evaluate() == expected
 
