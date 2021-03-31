@@ -204,7 +204,9 @@ class TestDefaultGraphTraversal:
             ("label", [], "g.V().label()"),
             ("loops", [], "g.V().loops()"),
             ("loops", ["arg"], 'g.V().loops("arg")'),
+            ("math", ["arg"], 'g.V().math("arg")'),
             ("max", [], "g.V().max()"),
+            ("mean", [], "g.V().mean()"),
         ],
     )
     def test_V_methods(
@@ -251,36 +253,6 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = getattr(g.V(), method)(g.V())
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            (["arg"], 'g.V().math("arg")'),
-        ],
-    )
-    def test_math(self, test_args: typing.List[str], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().math(*test_args)
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([], "g.V().mean()"),
-        ],
-    )
-    def test_mean(self, test_args: typing.List[str], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().mean(*test_args)
         assert node
         assert node.evaluate() == expected
 
