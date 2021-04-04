@@ -250,6 +250,7 @@ class TestDefaultGraphTraversal:
             ("local", "g.V().local(g.V())"),
             ("map", "g.V().map(g.V())"),
             ("not_", "g.V().not(g.V())"),
+            ("option", "g.V().option(g.V())"),
         ],
     )
     def test_V_methods2(self, method: str, expected: str) -> None:
@@ -260,15 +261,6 @@ class TestDefaultGraphTraversal:
         node = getattr(g.V(), method)(g.V())
         assert node
         assert node.evaluate() == expected
-
-    def test_option(self) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().option(g.V())
-        assert node
-        assert node.evaluate() == "g.V().option(g.V())"
 
     def test_or_(self) -> None:
         from gremlin.graph import DefaultGraphTraversal
