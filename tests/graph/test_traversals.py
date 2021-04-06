@@ -251,6 +251,7 @@ class TestDefaultGraphTraversal:
             ("map", "g.V().map(g.V())"),
             ("not_", "g.V().not(g.V())"),
             ("option", "g.V().option(g.V())"),
+            ("or_", "g.V().or(g.V())"),
         ],
     )
     def test_V_methods2(self, method: str, expected: str) -> None:
@@ -261,15 +262,6 @@ class TestDefaultGraphTraversal:
         node = getattr(g.V(), method)(g.V())
         assert node
         assert node.evaluate() == expected
-
-    def test_or_(self) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().or_(g.V())
-        assert node
-        assert node.evaluate() == "g.V().or(g.V())"
 
     @pytest.mark.parametrize(
         "test_args,expected",
