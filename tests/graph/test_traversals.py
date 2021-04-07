@@ -211,6 +211,7 @@ class TestDefaultGraphTraversal:
             ("next", [], "g.V().next()"),
             ("next", [1], "g.V().next(1)"),
             ("none", [], "g.V().none()"),
+            ("otherV", [], "g.V().otherV()"),
         ],
     )
     def test_V_methods(
@@ -260,21 +261,6 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = getattr(g.V(), method)(g.V())
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([], "g.V().otherV()"),
-        ],
-    )
-    def test_otherV(self, test_args: typing.List[str], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().otherV(*test_args)
         assert node
         assert node.evaluate() == expected
 
