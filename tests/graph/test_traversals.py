@@ -223,6 +223,7 @@ class TestDefaultGraphTraversal:
             ("profile", [], "g.V().profile()"),
             ("project", ["arg"], 'g.V().project("arg")'),
             ("project", ["arg1", "arg2"], 'g.V().project("arg1","arg2")'),
+            ("sample", [1], "g.V().sample(1)"),
         ],
     )
     def test_V_methods(
@@ -287,21 +288,6 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = g.V().sack(*test_args)
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([1], "g.V().sample(1)"),
-        ],
-    )
-    def test_sample(self, test_args: typing.List[int], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().sample(*test_args)
         assert node
         assert node.evaluate() == expected
 
