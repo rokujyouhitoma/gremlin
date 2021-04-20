@@ -230,6 +230,9 @@ class TestDefaultGraphTraversal:
             ("skip", [1], "g.V().skip(1)"),
             ("subgraph", ["arg1"], 'g.V().subgraph("arg1")'),
             ("sum", [], "g.V().sum()"),
+            ("tail", [], "g.V().tail()"),
+            ("timeLimit", [0], "g.V().timeLimit(0)"),
+            ("timeLimit", [1], "g.V().timeLimit(1)"),
         ],
     )
     def test_V_methods(
@@ -279,37 +282,6 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = getattr(g.V(), method)(g.V())
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([], "g.V().tail()"),
-        ],
-    )
-    def test_tail(self, test_args: typing.List[str], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().tail(*test_args)
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([0], "g.V().timeLimit(0)"),
-            ([1], "g.V().timeLimit(1)"),
-        ],
-    )
-    def test_timeLimit(self, test_args: typing.List[int], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().timeLimit(*test_args)
         assert node
         assert node.evaluate() == expected
 
