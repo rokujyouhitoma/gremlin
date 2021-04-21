@@ -233,6 +233,8 @@ class TestDefaultGraphTraversal:
             ("tail", [], "g.V().tail()"),
             ("timeLimit", [0], "g.V().timeLimit(0)"),
             ("timeLimit", [1], "g.V().timeLimit(1)"),
+            ("times", [0], "g.V().times(0)"),
+            ("times", [1], "g.V().times(1)"),
         ],
     )
     def test_V_methods(
@@ -282,22 +284,6 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = getattr(g.V(), method)(g.V())
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([0], "g.V().times(0)"),
-            ([1], "g.V().times(1)"),
-        ],
-    )
-    def test_times(self, test_args: typing.List[int], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().times(*test_args)
         assert node
         assert node.evaluate() == expected
 
