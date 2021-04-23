@@ -235,6 +235,9 @@ class TestDefaultGraphTraversal:
             ("timeLimit", [1], "g.V().timeLimit(1)"),
             ("times", [0], "g.V().times(0)"),
             ("times", [1], "g.V().times(1)"),
+            ("to", [""], 'g.V().to("")'),
+            ("to", ["arg"], 'g.V().to("arg")'),
+            ("toList", [], "g.V().toList()"),
         ],
     )
     def test_V_methods(
@@ -284,37 +287,6 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = getattr(g.V(), method)(g.V())
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([""], 'g.V().to("")'),
-            (["arg"], 'g.V().to("arg")'),
-        ],
-    )
-    def test_to(self, test_args: typing.List[str], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().to(*test_args)
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([], "g.V().toList()"),
-        ],
-    )
-    def test_toList(self, test_args: typing.List[str], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().toList(*test_args)
         assert node
         assert node.evaluate() == expected
 
