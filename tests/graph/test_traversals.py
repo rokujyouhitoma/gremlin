@@ -242,6 +242,8 @@ class TestDefaultGraphTraversal:
             ("tree", [], "g.V().tree()"),
             ("tree", ["arg"], 'g.V().tree("arg")'),
             ("value", [], "g.V().value()"),
+            ("unfold", [], "g.V().unfold()"),
+            ("valueMap", [], "g.V().valueMap()"),
         ],
     )
     def test_V_methods(
@@ -291,36 +293,6 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = getattr(g.V(), method)(g.V())
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([], "g.V().unfold()"),
-        ],
-    )
-    def test_unfold(self, test_args: typing.List[str], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().unfold(*test_args)
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "test_args,expected",
-        [
-            ([], "g.V().valueMap()"),
-        ],
-    )
-    def test_valueMap(self, test_args: typing.List[str], expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = g.V().valueMap(*test_args)
         assert node
         assert node.evaluate() == expected
 
