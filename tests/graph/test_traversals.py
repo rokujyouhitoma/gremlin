@@ -266,7 +266,7 @@ class TestDefaultGraphTraversal:
             ("addE", "g.addE(g.V())"),
         ],
     )
-    def test_methods2(self, method: str, expected: str) -> None:
+    def test_DefaultGraphTraversal_methods(self, method: str, expected: str) -> None:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
@@ -290,7 +290,7 @@ class TestDefaultGraphTraversal:
             ("or_", "g.V().or(g.V())"),
         ],
     )
-    def test_V_methods2(self, method: str, expected: str) -> None:
+    def test_V_methods_with_V(self, method: str, expected: str) -> None:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
