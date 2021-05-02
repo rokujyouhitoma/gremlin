@@ -135,7 +135,7 @@ class TestDefaultGraphTraversal:
             ("addV", ["test"], 'g.addV("test")'),
         ],
     )
-    def test_methods(
+    def test_DefaultGraphTraversal_methods(
         self, method: str, test_labels: typing.List[str], expected: str
     ) -> None:
         from gremlin.graph import DefaultGraphTraversal
@@ -147,8 +147,27 @@ class TestDefaultGraphTraversal:
         assert node.evaluate() == expected
 
     @pytest.mark.parametrize(
+        "method,expected",
+        [
+            ("addE", "g.addE(g.V())"),
+        ],
+    )
+    def test_DefaultGraphTraversal_methods_with_graphtraversal(
+        self, method: str, expected: str
+    ) -> None:
+        from gremlin.graph import DefaultGraphTraversal
+
+        g = DefaultGraphTraversal()
+        assert g
+        node = getattr(g, method)(g.V())
+        assert node
+        assert node.evaluate() == expected
+
+    @pytest.mark.parametrize(
         "method,test_labels,expected",
         [
+            ("aggregate", [""], 'g.V().aggregate("")'),
+            ("aggregate", ["arg"], 'g.V().aggregate("arg")'),
             ("and_", [], "g.V().and()"),
             ("as_", ["arg1"], 'g.V().as("arg1")'),
             ("as_", ["arg1", "arg2"], 'g.V().as("arg1","arg2")'),
@@ -257,21 +276,6 @@ class TestDefaultGraphTraversal:
         g = DefaultGraphTraversal()
         assert g
         node = getattr(g.V(), method)(*test_labels)
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "method,expected",
-        [
-            ("addE", "g.addE(g.V())"),
-        ],
-    )
-    def test_DefaultGraphTraversal_methods(self, method: str, expected: str) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        assert g
-        node = getattr(g, method)(g.V())
         assert node
         assert node.evaluate() == expected
 
