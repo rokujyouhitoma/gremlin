@@ -172,7 +172,7 @@ class TestDefaultGraphTraversal:
             ("barrier", [], "g.V().barrier()"),
             ("barrier", [1], "g.V().barrier(1)"),
             ("both", [], "g.V().both()"),
-            ("both", ["arg1"], 'g.V().both("arg1")'),
+            ("both", ["arg"], 'g.V().both("arg")'),
             ("both", ["arg1", "arg2"], 'g.V().both("arg1","arg2")'),
             ("bothE", [], "g.V().bothE()"),
             ("bothE", ["arg1"], 'g.V().bothE("arg1")'),
