@@ -129,7 +129,6 @@ class TestDefaultGraphTraversal:
         [
             ("addE", [""], 'g.addE("")'),
             ("addE", ["test"], 'g.addE("test")'),
-            ("addE", ["test"], 'g.addE("test")'),
             ("addV", [], "g.addV()"),
             ("addV", [""], 'g.addV("")'),
             ("addV", ["test"], 'g.addV("test")'),
@@ -141,7 +140,6 @@ class TestDefaultGraphTraversal:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
-        assert g
         node = getattr(g, method)(*test_labels)
         assert node
         assert node.evaluate() == expected
@@ -158,7 +156,6 @@ class TestDefaultGraphTraversal:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
-        assert g
         node = getattr(g, method)(g.V())
         assert node
         assert node.evaluate() == expected
@@ -274,7 +271,6 @@ class TestDefaultGraphTraversal:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
-        assert g
         node = getattr(g.V(), method)(*test_labels)
         assert node
         assert node.evaluate() == expected
@@ -298,7 +294,6 @@ class TestDefaultGraphTraversal:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
-        assert g
         node = getattr(g.V(), method)(g.V())
         assert node
         assert node.evaluate() == expected
@@ -309,7 +304,6 @@ class TestDefaultGraphTraversalUsecases:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
-        assert g
         node = g.V().has("name", "gremlin").out("knows").out("knows").values("name")
         assert node
         assert (
@@ -321,7 +315,6 @@ class TestDefaultGraphTraversalUsecases:
         from gremlin.graph import DefaultGraphTraversal, as_
 
         g = DefaultGraphTraversal()
-        assert g
         node = (
             g.V()
             .match(
@@ -347,7 +340,6 @@ class TestDefaultGraphTraversalUsecases:
         from gremlin.graph import DefaultGraphTraversal, in_, has
 
         g = DefaultGraphTraversal()
-        assert g
         node = (
             g.V()
             .has("name", "gremlin")
@@ -366,7 +358,6 @@ class TestDefaultGraphTraversalUsecases:
         from gremlin.graph import DefaultGraphTraversal, neq
 
         g = DefaultGraphTraversal()
-        assert g
         node = (
             g.V()
             .has("name", "gremlin")
@@ -394,7 +385,6 @@ class TestDefaultGraphTraversalUsecases:
         )
 
         g = DefaultGraphTraversal()
-        assert g
         node = (
             g.V()
             .has("name", "gremlin")
@@ -420,7 +410,6 @@ class TestDefaultGraphTraversalUsecases:
         from gremlin.graph import DefaultGraphTraversal, outE, desc
 
         g = DefaultGraphTraversal()
-        assert g
         node = (
             g.V()
             .hasLabel("person")
@@ -442,7 +431,6 @@ class TestDefaultGraphTraversalUsecases:
         from gremlin.graph import DefaultGraphTraversal
 
         g = DefaultGraphTraversal()
-        assert g
         name = "name1"
         property = "property1"
         node = (
