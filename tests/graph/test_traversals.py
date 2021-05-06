@@ -180,6 +180,7 @@ class TestDefaultGraphTraversal:
             ("bothV", [], "g.V().bothV()"),
             # branch
             ("by", [], "g.V().by()"),
+            ("by", ["arg"], 'g.V().by("arg")'),
             ("cap", [""], 'g.V().cap("")'),
             ("cap", ["arg"], 'g.V().cap("arg")'),
             ("cap", ["arg1", "arg2"], 'g.V().cap("arg1","arg2")'),
