@@ -187,6 +187,7 @@ class TestDefaultGraphTraversal:
             ("coin", [0], "g.V().coin(0)"),
             ("coin", [1], "g.V().coin(1)"),
             ("connectedComponent", [], "g.V().connectedComponent()"),
+            ("count", [], "g.V().count()"),
             ("cyclicPath", [], "g.V().cyclicPath()"),
             ("elementMap", [], "g.V().elementMap()"),
             ("elementMap", ["arg"], 'g.V().elementMap("arg")'),
