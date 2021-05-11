@@ -203,6 +203,7 @@ class TestDefaultGraphTraversal:
             ("from_", ["arg"], 'g.V().from("arg")'),
             ("group", [], "g.V().group()"),
             ("group", ["arg"], 'g.V().group("arg")'),
+            ("groupCount", [], "g.V().groupCount()"),
             ("hasId", ["arg"], 'g.V().hasId("arg")'),
             ("hasId", ["arg1", "arg2"], 'g.V().hasId("arg1","arg2")'),
             ("hasKey", ["arg"], 'g.V().hasKey("arg")'),
