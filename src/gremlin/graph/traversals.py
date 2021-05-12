@@ -541,6 +541,17 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         )
         return self
 
+    def groupV3d0(
+        self, sideEffectKey: typing.Optional[str] = None
+    ) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "groupV3d0",
+                [] if sideEffectKey is None else [StringNode(sideEffectKey)],
+            )
+        )
+        return self
+
     def has(self, propertyKey: str, value: typing.Any) -> "DefaultGraphTraversal":
         self.nodes.append(
             MethodCallNode("has", [StringNode(propertyKey), StringNode(value)])
