@@ -201,9 +201,6 @@ class TestDefaultGraphTraversal:
             # flatMap
             ("fold", [], "g.V().fold()"),
             ("from_", ["arg"], 'g.V().from("arg")'),
-            ("group", [], "g.V().group()"),
-            ("group", ["arg"], 'g.V().group("arg")'),
-            ("groupCount", [], "g.V().groupCount()"),
             ("hasId", ["arg"], 'g.V().hasId("arg")'),
             ("hasId", ["arg1", "arg2"], 'g.V().hasId("arg1","arg2")'),
             ("hasKey", ["arg"], 'g.V().hasKey("arg")'),
@@ -214,6 +211,8 @@ class TestDefaultGraphTraversal:
             ("hasValue", ["arg"], 'g.V().hasValue("arg")'),
             ("hasValue", ["arg1", "arg2"], 'g.V().hasValue("arg1","arg2")'),
             ("group", [], "g.V().group()"),
+            ("group", ["arg"], 'g.V().group("arg")'),
+            ("groupCount", [], "g.V().groupCount()"),
             ("groupCount", [], "g.V().groupCount()"),
             ("groupCount", ["arg"], 'g.V().groupCount("arg")'),
             ("groupV3d0", [], "g.V().groupV3d0()"),
