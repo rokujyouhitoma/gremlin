@@ -234,6 +234,7 @@ class TestDefaultGraphTraversal:
             ("limit", [0], "g.V().limit(0)"),
             ("loops", [], "g.V().loops()"),
             ("loops", ["arg"], 'g.V().loops("arg")'),
+            ("mapKeys", [], "g.V().mapKeys()"),
             ("math", ["arg"], 'g.V().math("arg")'),
             ("max", [], "g.V().max()"),
             ("mean", [], "g.V().mean()"),
