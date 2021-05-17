@@ -189,6 +189,11 @@ class GraphTraversal(metaclass=ABCMeta):
         pass
 
     def mapKeys(self) -> "GraphTraversal":
+        # Deprecated.
+        pass
+
+    def mapValues(self) -> "GraphTraversal":
+        # Deprecated.
         pass
 
     def match(self, *args: "GraphTraversal") -> "GraphTraversal":
@@ -655,7 +660,13 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         return self
 
     def mapKeys(self) -> "DefaultGraphTraversal":
+        # Deprecated.
         self.nodes.append(MethodCallNode("mapKeys", []))
+        return self
+
+    def mapValues(self) -> "DefaultGraphTraversal":
+        # Deprecated.
+        self.nodes.append(MethodCallNode("mapValues", []))
         return self
 
     def match(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":

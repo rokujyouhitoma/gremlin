@@ -76,6 +76,8 @@ class TestGraphTraversal:
         g.local(g.V())
         g.loops()
         g.map(g.V())
+        g.mapKeys()
+        g.mapValues()
         g.match(g, g)
         g.math("")
         g.max()
@@ -233,6 +235,7 @@ class TestDefaultGraphTraversal:
             ("limit", [0], "g.V().limit(0)"),
             ("loops", [], "g.V().loops()"),
             ("mapKeys", [], "g.V().mapKeys()"),
+            ("mapValues", [], "g.V().mapValues()"),
             ("math", ["arg"], 'g.V().math("arg")'),
             ("max", [], "g.V().max()"),
             ("mean", [], "g.V().mean()"),
