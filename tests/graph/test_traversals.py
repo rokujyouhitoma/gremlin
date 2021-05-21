@@ -253,6 +253,7 @@ class TestDefaultGraphTraversal:
             ("outE", ["arg1", "arg2"], 'g.V().outE("arg1","arg2")'),
             ("outV", [], "g.V().outV()"),
             ("pageRank", [], "g.V().pageRank()"),
+            ("path", [], "g.V().path()"),
             ("peerPressure", [], "g.V().peerPressure()"),
             ("profile", [], "g.V().profile()"),
             ("project", ["arg"], 'g.V().project("arg")'),
