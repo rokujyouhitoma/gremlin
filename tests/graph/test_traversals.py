@@ -267,6 +267,7 @@ class TestDefaultGraphTraversal:
             ("select", ["arg"], 'g.V().select("arg")'),
             ("shortestPath", [], "g.V().shortestPath()"),
             ("simplePath", [], "g.V().simplePath()"),
+            ("store", ["arg"], 'g.V().store("arg")'),
             ("skip", [1], "g.V().skip(1)"),
             ("subgraph", ["arg1"], 'g.V().subgraph("arg1")'),
             ("sum", [], "g.V().sum()"),
