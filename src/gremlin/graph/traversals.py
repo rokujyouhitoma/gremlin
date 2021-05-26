@@ -294,7 +294,7 @@ class GraphTraversal(metaclass=ABCMeta):
     def sum(self) -> "GraphTraversal":
         pass
 
-    def tail(self) -> "GraphTraversal":
+    def tail(self, limit: typing.Optional[int] = None) -> "GraphTraversal":
         pass
 
     def timeLimit(self, timeLimit: int) -> "GraphTraversal":
@@ -829,8 +829,13 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("sum", []))
         return self
 
-    def tail(self) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("tail", []))
+    def tail(self, limit: typing.Optional[int] = None) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode(
+                "tail",
+                [] if limit is None else [IntegerNode(limit)],
+            )
+        )
         return self
 
     def timeLimit(self, timeLimit: int) -> "DefaultGraphTraversal":

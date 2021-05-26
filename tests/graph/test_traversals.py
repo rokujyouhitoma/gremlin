@@ -108,6 +108,7 @@ class TestGraphTraversal:
         g.simplePath()
         g.skip(1)
         g.subgraph("")
+        g.store("")
         g.sum()
         g.tail()
         g.timeLimit(1)
@@ -272,6 +273,7 @@ class TestDefaultGraphTraversal:
             ("subgraph", ["arg1"], 'g.V().subgraph("arg1")'),
             ("sum", [], "g.V().sum()"),
             ("tail", [], "g.V().tail()"),
+            ("tail", [1], "g.V().tail(1)"),
             ("timeLimit", [0], "g.V().timeLimit(0)"),
             ("timeLimit", [1], "g.V().timeLimit(1)"),
             ("times", [0], "g.V().times(0)"),
