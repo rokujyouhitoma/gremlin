@@ -280,10 +280,11 @@ class TestDefaultGraphTraversal:
             ("times", [1], "g.V().times(1)"),
             ("to", [""], 'g.V().to("")'),
             ("to", ["arg"], 'g.V().to("arg")'),
-            ("toList", [], "g.V().toList()"),
-            ("toSet", [], "g.V().toSet()"),
+            ("toList", [], "g.V().toList()"),  # ???
+            ("toSet", [], "g.V().toSet()"),  # ???
             ("tree", [], "g.V().tree()"),
             ("tree", ["arg"], 'g.V().tree("arg")'),
+            ("unfold", [], "g.V().unfold()"),
             ("value", [], "g.V().value()"),
             ("unfold", [], "g.V().unfold()"),
             ("valueMap", [], "g.V().valueMap()"),
