@@ -285,7 +285,6 @@ class TestDefaultGraphTraversal:
             ("tree", [], "g.V().tree()"),
             ("tree", ["arg"], 'g.V().tree("arg")'),
             ("unfold", [], "g.V().unfold()"),
-            ("unfold", [], "g.V().unfold()"),
             ("value", [], "g.V().value()"),
             ("valueMap", [], "g.V().valueMap()"),
             ("valueMap", ["arg"], 'g.V().valueMap("arg")'),
