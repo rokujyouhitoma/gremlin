@@ -306,6 +306,7 @@ class TestDefaultGraphTraversal:
     @pytest.mark.parametrize(
         "method,expected",
         [
+            ("and_", "g.V().and(g.V())"),
             ("branch", "g.V().branch(g.V())"),
             ("choose", "g.V().choose(g.V())"),
             ("coalesce", "g.V().coalesce(g.V())"),
