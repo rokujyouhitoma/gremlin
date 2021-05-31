@@ -133,9 +133,6 @@ class TestDefaultGraphTraversal:
         [
             ("addE", [""], 'g.addE("")'),
             ("addE", ["test"], 'g.addE("test")'),
-            ("addV", [], "g.addV()"),
-            ("addV", [""], 'g.addV("")'),
-            ("addV", ["test"], 'g.addV("test")'),
         ],
     )
     def test_DefaultGraphTraversal_methods(
@@ -167,6 +164,7 @@ class TestDefaultGraphTraversal:
     @pytest.mark.parametrize(
         "method,test_labels,expected",
         [
+            ("addV", ["arg"], 'g.V().addV("arg")'),
             ("aggregate", [""], 'g.V().aggregate("")'),
             ("aggregate", ["arg"], 'g.V().aggregate("arg")'),
             ("and_", [], "g.V().and()"),

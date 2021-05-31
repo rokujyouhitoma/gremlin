@@ -360,7 +360,6 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
     def addV(
         self, vertexLabel: typing.Union[str, "GraphTraversal", None] = None
     ) -> "DefaultGraphTraversal":
-        self.nodes = [gNode()]
         self.nodes.append(
             MethodCallNode(
                 "addV",
