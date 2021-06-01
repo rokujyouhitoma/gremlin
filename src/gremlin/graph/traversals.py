@@ -1,6 +1,5 @@
 import typing
 from abc import ABCMeta
-from dataclasses import dataclass, field
 
 from gremlin.nodes import (
     AnyNode,
@@ -337,14 +336,15 @@ class GraphTraversal(metaclass=ABCMeta):
         pass
 
 
-@dataclass
 class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
-    nodes: typing.List[Node] = field(default_factory=list)
+    nodes: typing.List[Node]
+
+    def __init__(self, nodes: typing.List[Node] = [gNode()]):
+        self.nodes = nodes
 
     def addE(
         self, edgeLabel: typing.Union[str, "GraphTraversal"]
     ) -> "DefaultGraphTraversal":
-        self.nodes = [gNode()]
         self.nodes.append(
             MethodCallNode(
                 "addE",
