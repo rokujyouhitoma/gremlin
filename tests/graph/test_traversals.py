@@ -131,24 +131,9 @@ class TestDefaultGraphTraversal:
     @pytest.mark.parametrize(
         "method,test_labels,expected",
         [
-            ("addE", [""], 'g.addE("")'),
-            ("addE", ["test"], 'g.addE("test")'),
-        ],
-    )
-    def test_DefaultGraphTraversal_methods(
-        self, method: str, test_labels: typing.List[str], expected: str
-    ) -> None:
-        from gremlin.graph import DefaultGraphTraversal
-
-        g = DefaultGraphTraversal()
-        node = getattr(g, method)(*test_labels)
-        assert node
-        assert node.evaluate() == expected
-
-    @pytest.mark.parametrize(
-        "method,test_labels,expected",
-        [
+            ("addE", [""], 'g.V().addE("")'),
             ("addE", ["arg"], 'g.V().addE("arg")'),
+            ("addV", [""], 'g.V().addV("")'),
             ("addV", ["arg"], 'g.V().addV("arg")'),
             ("aggregate", [""], 'g.V().aggregate("")'),
             ("aggregate", ["arg"], 'g.V().aggregate("arg")'),
