@@ -84,9 +84,6 @@ class GraphTraversal(metaclass=ABCMeta):
     def coin(self, probability: int) -> "GraphTraversal":
         pass
 
-    def connectedComponent(self) -> "GraphTraversal":
-        pass
-
     def count(self) -> "GraphTraversal":
         pass
 
@@ -481,10 +478,6 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def coin(self, probability: int) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("coin", [IntegerNode(probability)]))
-        return self
-
-    def connectedComponent(self) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("connectedComponent", []))
         return self
 
     def count(self) -> "DefaultGraphTraversal":
