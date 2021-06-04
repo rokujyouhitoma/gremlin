@@ -250,6 +250,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def project(self, projectKey: str, *otherProjectKeys: str) -> "GraphTraversal":
         pass
 
+    def properties(self, *propertyKeys: str) -> "GraphTraversal":
+        pass
+
     def propertyMap(self, *propertyKeys: str) -> "GraphTraversal":
         pass
 
@@ -758,6 +761,12 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
             MethodCallNode(
                 "project", [StringNode(v) for v in (projectKey, *otherProjectKeys)]
             )
+        )
+        return self
+
+    def properties(self, *propertyKeys: str) -> "DefaultGraphTraversal":
+        self.nodes.append(
+            MethodCallNode("properties", [StringNode(v) for v in propertyKeys])
         )
         return self
 
