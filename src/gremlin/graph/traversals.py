@@ -235,7 +235,7 @@ class GraphTraversal(metaclass=ABCMeta):
     def outV(self) -> "GraphTraversal":
         pass
 
-    def pageRank(self) -> "GraphTraversal":
+    def pageRank(self, alpha: typing.Optional[int] = None) -> "GraphTraversal":
         pass
 
     def path(self) -> "GraphTraversal":
@@ -732,8 +732,11 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(MethodCallNode("outV", []))
         return self
 
-    def pageRank(self) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("pageRank", []))
+    def pageRank(self, alpha: typing.Optional[int] = None) -> "DefaultGraphTraversal":
+        # TODO: alpha is type of double
+        self.nodes.append(
+            MethodCallNode("pageRank", [] if alpha is None else [IntegerNode(alpha)])
+        )
         return self
 
     def path(self) -> "DefaultGraphTraversal":

@@ -40,7 +40,6 @@ class TestGraphTraversal:
         g.choose(g.V())
         g.coalesce(g.V())
         g.coin(0)
-        g.connectedComponent()
         g.count()
         g.cyclicPath()
         g.dedup("")
@@ -175,7 +174,6 @@ class TestDefaultGraphTraversal:
             ("group", [], "g.V().group()"),
             ("group", ["arg"], 'g.V().group("arg")'),
             ("groupCount", [], "g.V().groupCount()"),
-            ("groupCount", [], "g.V().groupCount()"),
             ("groupCount", ["arg"], 'g.V().groupCount("arg")'),
             ("groupV3d0", [], "g.V().groupV3d0()"),
             ("groupV3d0", ["arg"], 'g.V().groupV3d0("arg")'),
@@ -204,8 +202,8 @@ class TestDefaultGraphTraversal:
             ("label", [], "g.V().label()"),
             ("limit", [0], "g.V().limit(0)"),
             ("loops", [], "g.V().loops()"),
-            ("mapKeys", [], "g.V().mapKeys()"),
-            ("mapValues", [], "g.V().mapValues()"),
+            ("mapKeys", [], "g.V().mapKeys()"),  # Deprecated
+            ("mapValues", [], "g.V().mapValues()"),  # Deprecated
             ("math", ["arg"], 'g.V().math("arg")'),  # ???
             ("max", [], "g.V().max()"),
             ("mean", [], "g.V().mean()"),
@@ -223,6 +221,7 @@ class TestDefaultGraphTraversal:
             ("outE", ["arg1", "arg2"], 'g.V().outE("arg1","arg2")'),
             ("outV", [], "g.V().outV()"),
             ("pageRank", [], "g.V().pageRank()"),
+            ("pageRank", [1], "g.V().pageRank(1)"),
             ("path", [], "g.V().path()"),
             ("peerPressure", [], "g.V().peerPressure()"),
             ("profile", [], "g.V().profile()"),
