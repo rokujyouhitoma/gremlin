@@ -256,8 +256,8 @@ class TestDefaultGraphTraversal:
             ("valueMap", [], "g.V().valueMap()"),
             ("valueMap", ["arg"], 'g.V().valueMap("arg")'),
             ("values", ["arg"], 'g.V().values("arg")'),
-            ("with_", ["arg"], 'g.V().with("arg")'),
-            ("write", [], "g.V().write()"),
+            ("with_", ["arg"], 'g.V().with("arg")'), # ???
+            ("write", [], "g.V().write()"), # ???
         ],
     )
     def test_V_methods(
