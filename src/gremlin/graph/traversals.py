@@ -875,7 +875,6 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         return self
 
     def V(self) -> "DefaultGraphTraversal":
-        # TODO: ???
         self = DefaultGraphTraversal()
         self.nodes = [gNode()]
         self.nodes.append(MethodCallNode("V", []))
