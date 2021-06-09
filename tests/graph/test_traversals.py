@@ -130,15 +130,14 @@ class TestDefaultGraphTraversal:
     @pytest.mark.parametrize(
         "method,test_labels,expected",
         [
-            ("addE", [""], 'g.V().addE("")'),
             ("addE", ["arg"], 'g.V().addE("arg")'),
             ("addV", [""], 'g.V().addV("")'),
             ("addV", ["arg"], 'g.V().addV("arg")'),
-            ("aggregate", [""], 'g.V().aggregate("")'),
             ("aggregate", ["arg"], 'g.V().aggregate("arg")'),
             ("and_", [], "g.V().and()"),
             ("as_", ["arg"], 'g.V().as("arg")'),
             ("as_", ["arg1", "arg2"], 'g.V().as("arg1","arg2")'),
+            ("as_", ["arg1", "arg2", "arg3"], 'g.V().as("arg1","arg2","arg3")'),
             ("asAdmin", [], "g.V().asAdmin()"),
             ("barrier", [], "g.V().barrier()"),
             ("barrier", [1], "g.V().barrier(1)"),
@@ -256,8 +255,8 @@ class TestDefaultGraphTraversal:
             ("valueMap", [], "g.V().valueMap()"),
             ("valueMap", ["arg"], 'g.V().valueMap("arg")'),
             ("values", ["arg"], 'g.V().values("arg")'),
-            ("with_", ["arg"], 'g.V().with("arg")'), # ???
-            ("write", [], "g.V().write()"), # ???
+            ("with_", ["arg"], 'g.V().with("arg")'),  # ???
+            ("write", [], "g.V().write()"),  # ???
         ],
     )
     def test_V_methods(
