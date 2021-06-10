@@ -78,7 +78,6 @@ class TestGraphTraversal:
         g.mapKeys()
         g.mapValues()
         g.match(g, g)
-        g.math("")
         g.max()
         g.mean()
         g.min()
@@ -131,7 +130,6 @@ class TestDefaultGraphTraversal:
         "method,test_labels,expected",
         [
             ("addE", ["arg"], 'g.V().addE("arg")'),
-            ("addV", [""], 'g.V().addV("")'),
             ("addV", ["arg"], 'g.V().addV("arg")'),
             ("aggregate", ["arg"], 'g.V().aggregate("arg")'),
             ("and_", [], "g.V().and()"),
@@ -203,7 +201,6 @@ class TestDefaultGraphTraversal:
             ("loops", [], "g.V().loops()"),
             ("mapKeys", [], "g.V().mapKeys()"),  # Deprecated
             ("mapValues", [], "g.V().mapValues()"),  # Deprecated
-            ("math", ["arg"], 'g.V().math("arg")'),  # ???
             ("max", [], "g.V().max()"),
             ("mean", [], "g.V().mean()"),
             ("min", [], "g.V().min()"),

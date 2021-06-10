@@ -195,9 +195,6 @@ class GraphTraversal(metaclass=ABCMeta):
     def match(self, *args: "GraphTraversal") -> "GraphTraversal":
         pass
 
-    def math(self, expression: str) -> "GraphTraversal":
-        pass
-
     def max(self) -> "GraphTraversal":
         pass
 
@@ -672,10 +669,6 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def match(self, *args: "GraphTraversal") -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("match", [AnyNode(v) for v in args]))
-        return self
-
-    def math(self, expression: str) -> "DefaultGraphTraversal":
-        self.nodes.append(MethodCallNode("math", [StringNode(expression)]))
         return self
 
     def max(self) -> "DefaultGraphTraversal":
