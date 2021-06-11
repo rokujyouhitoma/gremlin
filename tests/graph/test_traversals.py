@@ -163,11 +163,10 @@ class TestDefaultGraphTraversal:
             ("dedup", ["arg"], 'g.V().dedup("arg")'),
             ("dedup", ["arg1", "arg2"], 'g.V().dedup("arg1","arg2")'),
             ("drop", [], "g.V().drop()"),
-            ("emit", [], "g.V().emit()"),
-            # elementMap is parenet method?
             ("elementMap", [], "g.V().elementMap()"),
             ("elementMap", ["arg"], 'g.V().elementMap("arg")'),
             ("elementMap", ["arg1", "arg2"], 'g.V().elementMap("arg1","arg2")'),
+            ("emit", [], "g.V().emit()"),
             # filter
             # flatMap
             ("fold", [], "g.V().fold()"),
