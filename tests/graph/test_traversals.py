@@ -142,16 +142,18 @@ class TestDefaultGraphTraversal:
             ("both", [], "g.V().both()"),
             ("both", ["arg"], 'g.V().both("arg")'),
             ("both", ["arg1", "arg2"], 'g.V().both("arg1","arg2")'),
-            ("bothE", [], "g.V().bothE()"),
+            ("both", ["arg1", "arg2", "arg3"], 'g.V().both("arg1","arg2","arg3")'),
             ("bothE", ["arg"], 'g.V().bothE("arg")'),
             ("bothE", ["arg1", "arg2"], 'g.V().bothE("arg1","arg2")'),
             ("bothV", [], "g.V().bothV()"),
             # branch
             ("by", [], "g.V().by()"),
             ("by", ["arg"], 'g.V().by("arg")'),
-            ("cap", [""], 'g.V().cap("")'),
             ("cap", ["arg"], 'g.V().cap("arg")'),
             ("cap", ["arg1", "arg2"], 'g.V().cap("arg1","arg2")'),
+            ("cap", ["arg1", "arg2", "arg3"], 'g.V().cap("arg1","arg2","arg3")'),
+            # choose
+            # coalesce
             ("coin", [0], "g.V().coin(0)"),
             ("coin", [1], "g.V().coin(1)"),
             ("count", [], "g.V().count()"),
