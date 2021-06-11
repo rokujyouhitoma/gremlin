@@ -40,6 +40,7 @@ class TestGraphTraversal:
         g.choose(g.V())
         g.coalesce(g.V())
         g.coin(0)
+        g.connectedComponent()
         g.count()
         g.cyclicPath()
         g.dedup("")
@@ -156,6 +157,7 @@ class TestDefaultGraphTraversal:
             # coalesce
             ("coin", [0], "g.V().coin(0)"),
             ("coin", [1], "g.V().coin(1)"),
+            ("connectedComponent", [], "g.V().connectedComponent()"),
             ("count", [], "g.V().count()"),
             ("cyclicPath", [], "g.V().cyclicPath()"),
             ("dedup", ["arg"], 'g.V().dedup("arg")'),
