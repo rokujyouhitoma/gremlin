@@ -17,6 +17,9 @@ class TestTraversal:
 
 
 class TestGraphTraversal:
+    # Based on 3.5.0
+    # http://tinkerpop.apache.org/javadocs/3.5.0/core/org/apache/tinkerpop/gremlin/process/traversal/dsl/graph/GraphTraversal.html
+
     def test_interfaces(self) -> None:
         from gremlin.graph import GraphTraversal
 
@@ -175,8 +178,6 @@ class TestDefaultGraphTraversal:
             ("group", ["arg"], 'g.V().group("arg")'),
             ("groupCount", [], "g.V().groupCount()"),
             ("groupCount", ["arg"], 'g.V().groupCount("arg")'),
-            ("groupV3d0", [], "g.V().groupV3d0()"),
-            ("groupV3d0", ["arg"], 'g.V().groupV3d0("arg")'),
             ("has", ["arg"], 'g.V().has("arg")'),
             ("hasId", ["arg"], 'g.V().hasId("arg")'),
             ("hasId", ["arg1", "arg2"], 'g.V().hasId("arg1","arg2")'),
