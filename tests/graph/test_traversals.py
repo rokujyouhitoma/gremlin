@@ -79,7 +79,6 @@ class TestGraphTraversal:
         g.local(g.V())
         g.loops()
         g.map(g.V())
-        g.mapKeys()
         g.mapValues()
         g.match(g, g)
         g.max()
@@ -196,14 +195,14 @@ class TestDefaultGraphTraversal:
             ("inE", [], "g.V().inE()"),
             ("inE", ["arg"], 'g.V().inE("arg")'),
             ("inE", ["arg1", "arg2"], 'g.V().inE("arg1","arg2")'),
-            # injection
+            # inject
             ("inV", [], "g.V().inV()"),
             ("iterate", [], "g.V().iterate()"),
             ("key", [], "g.V().key()"),
             ("label", [], "g.V().label()"),
             ("limit", [0], "g.V().limit(0)"),
+            # local
             ("loops", [], "g.V().loops()"),
-            ("mapKeys", [], "g.V().mapKeys()"),  # Deprecated
             ("mapValues", [], "g.V().mapValues()"),  # Deprecated
             ("max", [], "g.V().max()"),
             ("mean", [], "g.V().mean()"),
