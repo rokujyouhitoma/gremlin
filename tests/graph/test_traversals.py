@@ -196,18 +196,25 @@ class TestDefaultGraphTraversal:
             ("inE", ["arg1", "arg2"], 'g.V().inE("arg1","arg2")'),
             # inject
             ("inV", [], "g.V().inV()"),
+            # is
             ("iterate", [], "g.V().iterate()"),
             ("key", [], "g.V().key()"),
             ("label", [], "g.V().label()"),
             ("limit", [0], "g.V().limit(0)"),
             # local
             ("loops", [], "g.V().loops()"),
+            # map
+            # math
             ("max", [], "g.V().max()"),
             ("mean", [], "g.V().mean()"),
             ("min", [], "g.V().min()"),
-            ("next", [], "g.V().next()"),
-            ("next", [1], "g.V().next(1)"),
+            ("next", [], "g.V().next()"), # ???
+            ("next", [1], "g.V().next(1)"), # ???
             ("none", [], "g.V().none()"),
+            # not
+            # option
+            # optional
+            # or
             ("order", [], "g.V().order()"),
             ("otherV", [], "g.V().otherV()"),
             ("out", [], "g.V().out()"),
