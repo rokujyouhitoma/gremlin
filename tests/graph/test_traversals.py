@@ -101,6 +101,7 @@ class TestGraphTraversal:
         g.properties("")
         g.propertyMap("")
         g.range(1, 2)
+        g.read()
         g.repeat(g, g)
         g.sack()
         g.select("")
@@ -208,8 +209,8 @@ class TestDefaultGraphTraversal:
             ("max", [], "g.V().max()"),
             ("mean", [], "g.V().mean()"),
             ("min", [], "g.V().min()"),
-            ("next", [], "g.V().next()"), # ???
-            ("next", [1], "g.V().next(1)"), # ???
+            ("next", [], "g.V().next()"),  # ???
+            ("next", [1], "g.V().next(1)"),  # ???
             ("none", [], "g.V().none()"),
             # not
             # option
@@ -235,6 +236,7 @@ class TestDefaultGraphTraversal:
             ("properties", ["arg1", "arg2"], 'g.V().properties("arg1","arg2")'),
             ("propertyMap", ["arg"], 'g.V().propertyMap("arg")'),
             ("range", [1, 2], "g.V().range(1,2)"),
+            ("read", [], "g.V().read()"),
             ("sack", [], "g.V().sack()"),
             ("sample", [1], "g.V().sample(1)"),
             ("select", ["arg"], 'g.V().select("arg")'),

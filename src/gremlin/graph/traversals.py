@@ -251,6 +251,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def range(self, low: int, high: int) -> "GraphTraversal":
         pass
 
+    def read(self) -> "GraphTraversal":
+        pass
+
     def repeat(
         self,
         loopName: typing.Union[str, "GraphTraversal"],
@@ -748,6 +751,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
         self.nodes.append(
             MethodCallNode("range", [IntegerNode(low), IntegerNode(high)])
         )
+        return self
+
+    def read(self) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("read", []))
         return self
 
     def repeat(
