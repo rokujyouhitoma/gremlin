@@ -276,6 +276,9 @@ class GraphTraversal(metaclass=ABCMeta):
     def simplePath(self) -> "GraphTraversal":
         pass
 
+    def skip(self, skip: int) -> "GraphTraversal":
+        pass
+
     def subgraph(self, sideEffectKey: str) -> "GraphTraversal":
         pass
 
@@ -790,6 +793,10 @@ class DefaultGraphTraversal(Traversal, GraphTraversal, MultipleNode):
 
     def simplePath(self) -> "DefaultGraphTraversal":
         self.nodes.append(MethodCallNode("simplePath", []))
+        return self
+
+    def skip(self, skip: int) -> "DefaultGraphTraversal":
+        self.nodes.append(MethodCallNode("skip", [IntegerNode(skip)]))
         return self
 
     def subgraph(self, sideEffectKey: str) -> "DefaultGraphTraversal":
