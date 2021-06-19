@@ -243,9 +243,9 @@ class TestDefaultGraphTraversal:
             ("select", ["arg"], 'g.V().select("arg")'),
             ("shortestPath", [], "g.V().shortestPath()"),
             ("simplePath", [], "g.V().simplePath()"),
+            ("skip", [1], "g.V().skip(1)"),
             ("store", ["arg"], 'g.V().store("arg")'),
             ("subgraph", ["arg1"], 'g.V().subgraph("arg1")'),
-            ("skip", [1], "g.V().skip(1)"),
             ("sum", [], "g.V().sum()"),
             ("tail", [], "g.V().tail()"),
             ("tail", [1], "g.V().tail(1)"),
@@ -255,17 +255,22 @@ class TestDefaultGraphTraversal:
             ("times", [1], "g.V().times(1)"),
             ("to", [""], 'g.V().to("")'),
             ("to", ["arg"], 'g.V().to("arg")'),
+            # toE
+            # toV
             ("toList", [], "g.V().toList()"),  # ???
             ("toSet", [], "g.V().toSet()"),  # ???
             ("tree", [], "g.V().tree()"),
             ("tree", ["arg"], 'g.V().tree("arg")'),
             ("unfold", [], "g.V().unfold()"),
+            # union
+            # until
             ("value", [], "g.V().value()"),
             ("valueMap", [], "g.V().valueMap()"),
             ("valueMap", ["arg"], 'g.V().valueMap("arg")'),
             ("values", ["arg"], 'g.V().values("arg")'),
-            ("with_", ["arg"], 'g.V().with("arg")'),  # ???
-            ("write", [], "g.V().write()"),  # ???
+            # where
+            ("with_", ["arg"], 'g.V().with("arg")'),
+            ("write", [], "g.V().write()"),
         ],
     )
     def test_V_methods(
