@@ -69,7 +69,6 @@ class GraphTraversal(metaclass=ABCMeta):
         pass
 
     def by(self, *args: typing.Union[str, "GraphTraversal"]) -> "GraphTraversal":
-        # TODO: too many arguments variation is exist
         pass
 
     def cap(self, sideEffectKey: str, *sideEffectKeys: str) -> "GraphTraversal":
